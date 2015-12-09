@@ -1,14 +1,20 @@
+package Juego;
 import java.io.ObjectInputStream.GetField;
+
+import Ventanas.Login;
 
 
 public class Jugador {
 	
+Login login = new Login();
 
 	
 	String nombre ;
-	String apellido ;
-	int puntos;
-	int edad;
+	String apellido  ;
+	
+	int puntos ;
+	int edad ;
+	
 	
 	public String getNombre() {
 		return nombre;
