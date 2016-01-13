@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+import Juego.Jugador;
+
 public class Login extends JFrame {
 
 	private JPanel contentPane;
@@ -21,7 +23,8 @@ public class Login extends JFrame {
 	private JTextField Edad;
 	private JTextField texto;
 	private String nombre ;
-	
+	private Jugador jugador;
+	private Juego juego;
 	
 	
 
@@ -44,7 +47,7 @@ public class Login extends JFrame {
 	}
 
 	public void lanzarJuego() {
-		Juego juego = new Juego();
+		 juego = new Juego();
 		juego.setVisible(true);
 		this.dispose();
 
@@ -56,14 +59,14 @@ public class Login extends JFrame {
 	public Login() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 399, 310);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("DATOS DEL JUGADOR");
-		lblNewLabel.setBounds(10, 11, 115, 14);
+		lblNewLabel.setBounds(10, 11, 139, 14);
 		contentPane.add(lblNewLabel);
 
 		JLabel lblNombre = new JLabel("Nombre");
@@ -110,7 +113,9 @@ public class Login extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				
+				
+				
 				if (e.getSource() == btnNewButton) {
 
 					if (Nombre.getText().length() != 0
@@ -120,8 +125,14 @@ public class Login extends JFrame {
 						
 						
 						
-						 
-
+						
+						jugador = new Jugador();
+						
+						jugador.setNombre(Nombre.getText().toString());
+						
+						juego.setJugador(jugador);
+						
+						
 						lanzarJuego();
 
 					} else {
@@ -136,7 +147,7 @@ public class Login extends JFrame {
 
 		});
 		
-		
+		juego = new Juego();
 		
 
 	}
