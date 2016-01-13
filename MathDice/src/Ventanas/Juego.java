@@ -361,7 +361,7 @@ public class Juego extends JFrame {
 							int suma = u+t+ci-si-nu;
 							resultado.setText(Integer.toString(suma));
 					}else if(d.equals("+") && c.equals("-")&& se.equals("+")&& oc.equals("-")){
-						int suma = u+t-ci-si-nu;
+						int suma = u+t-ci+si-nu;
 						resultado.setText(Integer.toString(suma));
 					}else if(d.equals("+") && c.equals("-")&& se.equals("-") && oc.equals("+")){
 						int suma = u+t-ci-si+nu;
