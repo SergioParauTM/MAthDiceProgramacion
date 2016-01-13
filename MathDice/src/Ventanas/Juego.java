@@ -36,6 +36,10 @@ public class Juego extends JFrame {
 	int valor3=0;
 	int valor4=0;
 	int valor5=0;
+	String resta="-";
+	String suma ="+";
+	
+	
 	
 	private Jugador jugador;
 
@@ -86,6 +90,8 @@ public class Juego extends JFrame {
 		contentPane.setLayout(null);
 		
 		mostrar = new JTextField();
+		mostrar.setEnabled(false);
+		mostrar.setEditable(false);
 		mostrar.setFont(new Font("Century", Font.BOLD, 25));
 		mostrar.setBounds(785, 189, 371, 78);
 		contentPane.add(mostrar);
@@ -115,7 +121,7 @@ public class Juego extends JFrame {
 			
 			public void mouseClicked(MouseEvent e){ 
 				
-			if(dado1.isEnabled()==true){
+			if(dado1.isEnabled()==true && mostrar.getText().endsWith("")){
 					mostrar.setText(mostrar.getText()+valor1 );
 			}
 			
@@ -208,23 +214,22 @@ public class Juego extends JFrame {
 		dado6.setEnabled(true);
 
 		dado6.setIcon( new ImageIcon(getClass().getResource("img/dode"+String.valueOf(valor=random.nextInt(12)+1)+".png")));
-		dado6.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e){ 
-				if(dado6.isEnabled()==true){
-				mostrar.setText(mostrar.getText()+valor);
-				}
-				dado6.setEnabled(false);
-			
-		
-			} 
-			}); 
+	
 		
 		
 		JButton btnNewButton = new JButton("+");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				mostrar.setText(mostrar.getText()+"+");
+				if(mostrar.getText().endsWith("-")&& mostrar.getText().endsWith("+")){
+					
+				}else if(mostrar.getText().endsWith("+")){
+					
+				}else if (mostrar.getText().length()==0){
+					
+				}else{
+					mostrar.setText(mostrar.getText()+suma);
+				}
 				
 				
 			}
@@ -235,9 +240,25 @@ public class Juego extends JFrame {
 		JButton btnNewButton_1 = new JButton("-");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mostrar.setText(mostrar.getText()+"-");
+				if(mostrar.getText().endsWith("+")){
+				
+				}else if(mostrar.getText().endsWith("-")){
+					
+				}else if (mostrar.getText().length()==0){
+					
+				}else{
+					mostrar.setText(mostrar.getText()+resta);
+				}
 			}
 		});
+		
+		
+		JLabel resultado = new JLabel("");
+		resultado.setFont(new Font("Tahoma", Font.BOLD, 17));
+		resultado.setBounds(930, 367, 115, 53);
+		contentPane.add(resultado);
+		
+		
 		btnNewButton_1.setBounds(1035, 59, 121, 99);
 		contentPane.add(btnNewButton_1);
 		
@@ -246,19 +267,155 @@ public class Juego extends JFrame {
 		JButton btnNewButton_2 = new JButton("MATHDICE");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(mostrar.getText().length()==3){
+				int u =Integer.parseInt(String.valueOf(mostrar.getText().charAt(0)));
+				String d =String.valueOf(mostrar.getText().charAt(1));
+				int t =Integer.parseInt(String.valueOf(mostrar.getText().charAt(2)));
+					if(d.equals("-")){
+						int resta= u-t;
+						resultado.setText(Integer.toString(resta));
+					}else{
+						int suma = u+t;
+						resultado.setText(Integer.toString(suma));
+					}
+				}
+				if(mostrar.getText().length()==5){
+					int u =Integer.parseInt(String.valueOf(mostrar.getText().charAt(0)));
+					String d =String.valueOf(mostrar.getText().charAt(1));
+					int t =Integer.parseInt(String.valueOf(mostrar.getText().charAt(2)));
+					String c =String.valueOf(mostrar.getText().charAt(3));
+					int ci =Integer.parseInt(String.valueOf(mostrar.getText().charAt(4)));
+						if(d.equals("-") && c.equals("-")){
+							int resta= u-t-ci;
+							resultado.setText(Integer.toString(resta));
+						}else if(d.equals("+") && c.equals("+")){
+							int suma = u+t+ci;
+							resultado.setText(Integer.toString(suma));
+						}else if(d.equals("+") && c.equals("-")){
+							int suma = u+t-ci;
+							resultado.setText(Integer.toString(suma));
+						}else if(d.equals("-") && c.equals("+")){
+							int suma = u-t+ci;
+							resultado.setText(Integer.toString(suma));
+						}
+					}
+				
+				if(mostrar.getText().length()==7){
+					int u =Integer.parseInt(String.valueOf(mostrar.getText().charAt(0)));
+					String d =String.valueOf(mostrar.getText().charAt(1));
+					int t =Integer.parseInt(String.valueOf(mostrar.getText().charAt(2)));
+					String c =String.valueOf(mostrar.getText().charAt(3));
+					int ci =Integer.parseInt(String.valueOf(mostrar.getText().charAt(4)));
+					String se =String.valueOf(mostrar.getText().charAt(5));
+					int si =Integer.parseInt(String.valueOf(mostrar.getText().charAt(6)));
+						if(d.equals("-") && c.equals("-") && se.equals("-")){
+							int resta= u-t-ci-si;
+							resultado.setText(Integer.toString(resta));
+						}else if(d.equals("+") && c.equals("+")&& se.equals("+")){
+							int suma = u+t+ci+si;
+							resultado.setText(Integer.toString(suma));
+						}else if(d.equals("+") && c.equals("-") && se.equalsIgnoreCase("-")){
+							int suma = u+t-ci-si;
+							resultado.setText(Integer.toString(suma));
+						}else if(d.equals("+") && c.equals("-")&& se.equals("+")){
+							int suma = u+t-ci+si;
+							resultado.setText(Integer.toString(suma));
+						
+					}else if(d.equals("+") && c.equals("+")&& se.equals("-")){
+						int suma = u+t+ci-si;
+						resultado.setText(Integer.toString(suma));
+					}else if(d.equals("-") && c.equals("+")&& se.equals("+")){
+						int suma = u-t-ci+si;
+						resultado.setText(Integer.toString(suma));
+					}else if(d.equals("-") && c.equals("+")&& se.equals("-")){
+						int suma = u-t+ci-si;
+						resultado.setText(Integer.toString(suma));
+					}
+				}
+				
+				if(mostrar.getText().length()==9){
+					int u =Integer.parseInt(String.valueOf(mostrar.getText().charAt(0)));
+					String d =String.valueOf(mostrar.getText().charAt(1));
+					int t =Integer.parseInt(String.valueOf(mostrar.getText().charAt(2)));
+					String c =String.valueOf(mostrar.getText().charAt(3));
+					int ci =Integer.parseInt(String.valueOf(mostrar.getText().charAt(4)));
+					String se =String.valueOf(mostrar.getText().charAt(5));
+					int si =Integer.parseInt(String.valueOf(mostrar.getText().charAt(6)));
+					String oc=String.valueOf(mostrar.getText().charAt(7));
+					int nu =Integer.parseInt(String.valueOf(mostrar.getText().charAt(8)));
+					
+						if(d.equals("-") && c.equals("-") && se.equals("-") && oc.equals("-")){
+							int resta= u-t-ci-si-nu;
+							resultado.setText(Integer.toString(resta));
+						}else if(d.equals("+") && c.equals("+")&& se.equals("+") && oc.equals("+")){
+							int suma = u+t+ci+si+nu;
+							resultado.setText(Integer.toString(suma));
+							
+						}else if(d.equals("+") && c.equals("+") && se.equalsIgnoreCase("+") && oc.equals("-")){
+							int suma = u+t+ci+si-nu;
+							resultado.setText(Integer.toString(suma));
+						}else if(d.equals("+") && c.equals("+")&& se.equals("-") && oc.equals("+")){
+							int suma = u+t+ci-si+nu;
+							resultado.setText(Integer.toString(suma));
+						}else if(d.equals("+") && c.equals("+")&& se.equals("-") && oc.equals("-")){
+							int suma = u+t+ci-si-nu;
+							resultado.setText(Integer.toString(suma));
+					}else if(d.equals("+") && c.equals("-")&& se.equals("+")&& oc.equals("-")){
+						int suma = u+t-ci-si-nu;
+						resultado.setText(Integer.toString(suma));
+					}else if(d.equals("+") && c.equals("-")&& se.equals("-") && oc.equals("+")){
+						int suma = u+t-ci-si+nu;
+						resultado.setText(Integer.toString(suma));
+					}else if(d.equals("+") && c.equals("-")&& se.equals("-")&& oc.equals("-")){
+						int suma = u+t-ci-si-nu;
+						resultado.setText(Integer.toString(suma));
+					}else if(d.equals("+") && c.equals("-")&& se.equals("+")&& oc.equals("+")){
+						int suma = u+t-ci+si+nu;
+						resultado.setText(Integer.toString(suma));
+					}else if(d.equals("-") && c.equals("-")&& se.equals("-")&& oc.equals("+")){
+						int suma = u-t-ci-si+nu;
+						resultado.setText(Integer.toString(suma));
+					}else if(d.equals("-") && c.equals("-")&& se.equals("+")&& oc.equals("-")){
+						int suma = u-t-ci+si-nu;
+						resultado.setText(Integer.toString(suma));
+					}else if(d.equals("-") && c.equals("+")&& se.equals("-")&& oc.equals("-")){
+						int suma = u-t+ci-si-nu;
+						resultado.setText(Integer.toString(suma));
+					}else if(d.equals("-") && c.equals("+")&& se.equals("-")&& oc.equals("+")){
+						int suma = u-t+ci-si+nu;
+						resultado.setText(Integer.toString(suma));
+					}else if(d.equals("-") && c.equals("+")&& se.equals("+")&& oc.equals("-")){
+						int suma = u-t+ci+si-nu;
+						resultado.setText(Integer.toString(suma));
+					}else if(d.equals("-") && c.equals("-")&& se.equals("+")&& oc.equals("+")){
+						int suma = u-t-ci+si+nu;
+						resultado.setText(Integer.toString(suma));
+					}else if(d.equals("+") && c.equals("-")&& se.equals("-")&& oc.equals("-")){
+						int suma = u+t-ci-si-nu;
+						resultado.setText(Integer.toString(suma));
+					}
+				}
+				
+				
+				
+				
 			}
 		});
 		btnNewButton_2.setBounds(785, 292, 371, 53);
 		contentPane.add(btnNewButton_2);
+		
+		
 		
 	
 		
 		
 		}
 	
-		
-
 	
-}
+	
+	
+		
+	}
+
 
 
