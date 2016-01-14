@@ -50,6 +50,7 @@ public class Login extends JFrame {
 		 juego = new Juego();
 		juego.setVisible(true);
 		this.dispose();
+		juego.generarimagenes();
 
 	}
 
@@ -134,6 +135,7 @@ public class Login extends JFrame {
 						
 						
 						lanzarJuego();
+						
 
 					} else {
 						texto.setText("falta completar algún campo");
