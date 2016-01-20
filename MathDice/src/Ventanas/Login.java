@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -51,8 +52,10 @@ public class Login extends JFrame {
 		juego.setVisible(true);
 		this.dispose();
 		juego.generarimagenes();
+		juego.setJugador(jugador);
 
 	}
+	
 
 	/**
 	 * Create the frame.
@@ -81,6 +84,7 @@ public class Login extends JFrame {
 		JLabel lblEdad = new JLabel("Edad");
 		lblEdad.setBounds(10, 124, 46, 14);
 		contentPane.add(lblEdad);
+	
 
 		Nombre = new JTextField();
 		Nombre.setBounds(98, 49, 182, 20);
@@ -118,10 +122,13 @@ public class Login extends JFrame {
 				
 				
 				if (e.getSource() == btnNewButton) {
-
+					
+					try{
+						
+					
 					if (Nombre.getText().length() != 0
 							&& Apellidos.getText().length() != 0
-							&& Edad.getText().length() != 0) {
+							&& Edad.getText().length() != 0  ) {
 							
 						
 						
@@ -130,8 +137,10 @@ public class Login extends JFrame {
 						jugador = new Jugador();
 						
 						jugador.setNombre(Nombre.getText().toString());
+						jugador.setApellido(Apellidos.getText().toString());
+						jugador.setEdad(Integer.parseInt(Edad.getText().toString()));
 						
-						juego.setJugador(jugador);
+					
 						
 						
 						lanzarJuego();
@@ -139,9 +148,14 @@ public class Login extends JFrame {
 
 					} else {
 						texto.setText("falta completar algún campo");
+						
+					}
+					}catch(Exception ev){
+						texto.setText("falta  algún campo");
 					}
 
 				}
+				
 			}
 				
 		

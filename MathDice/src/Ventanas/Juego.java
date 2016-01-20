@@ -32,6 +32,15 @@ public class Juego extends JFrame {
 	private JPanel contentPane;
 
 	private Random random = new Random();
+
+	
+
+	
+	
+	
+		
+	
+	
 	int valor = 0;
 	int valor1 = 0;
 	int valor2 = 0;
@@ -47,6 +56,7 @@ public class Juego extends JFrame {
 
 	private JLabel lbBienvenidoalJuego;
 	private JTextField mostrar;
+	private JTextField dodeNotocar;
 
 	public static void main(String[] args) {
 		
@@ -75,7 +85,7 @@ public class Juego extends JFrame {
 
 		this.jugador = jugador;
 
-		lbBienvenidoalJuego.setText("Bienvenido al juego"
+		lbBienvenidoalJuego.setText("Bienvenido al juego  "
 				+ jugador.getNombre().toString());
 
 	}
@@ -224,6 +234,15 @@ public class Juego extends JFrame {
 		dado6.setBackground(Color.LIGHT_GRAY);
 		dado6.setBounds(80, 423, 150, 150);
 		contentPane.add(dado6);
+		dado6.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				
+				
+				dodeNotocar.setText("No se debe presionar el dode");
+				dodeNotocar.setEnabled(true);
+
+			}
+		});
 		
 		
 		//FIN JLABEL IMAGENES
@@ -522,7 +541,9 @@ public class Juego extends JFrame {
 					}
 				}
 					
+				if(resultado.getText().length()!=0){
 				Reiniciar.setEnabled(true);
+				}
 			}
 		});
 		btnNewButton_2.setBounds(785, 292, 371, 53);
@@ -544,13 +565,22 @@ public class Juego extends JFrame {
 		});
 		Reiniciar.setBounds(855, 564, 247, 66);
 		contentPane.add(Reiniciar);
-
+		
+		dodeNotocar = new JTextField();
+		dodeNotocar.setBackground(new Color(135, 206, 250));
+		dodeNotocar.setBounds(295, 460, 230, 78);
+		contentPane.add(dodeNotocar);
+		dodeNotocar.setColumns(10);
+		dodeNotocar.setEnabled(false);
+		dodeNotocar.setEditable(false);
 	}
 	
 	public void generarimagenes(){
+		
+		
 		dado1.setEnabled(true);
 		dado1.setIcon(new ImageIcon(getClass().getResource(
-				"img/dado" + String.valueOf(valor1 = random.nextInt(3) + 1)
+				"img/dado" + String.valueOf(valor = random.nextInt(3) + 1)
 						+ "_3.png")));
 		dado2.setEnabled(true);
 		dado2.setIcon(new ImageIcon(getClass().getResource(

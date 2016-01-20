@@ -7,11 +7,11 @@ public class Jugador {
 
 
 	
-	String nombre ;
-	String apellido  ;
+	private String nombre ;
+	private String apellido  ;
 	
-	int puntos ;
-	int edad ;
+	private int puntos ;
+	private int edad ;
 	
 	public Jugador(){
 		
@@ -40,6 +40,7 @@ public class Jugador {
 		return edad;
 	}
 	public void setEdad(int edad) {
+		
 		this.edad = edad;
 	}
 
