@@ -34,19 +34,11 @@ public class Juego extends JFrame {
 	private Random random = new Random();
 
 	
+ImageIcon[] img = new ImageIcon[6];
+int[] valor = new int [6];
 
-	
-	
-	
-		
-	
-	
-	int valor = 0;
-	int valor1 = 0;
-	int valor2 = 0;
-	int valor3 = 0;
-	int valor4 = 0;
-	int valor5 = 0;
+
+
 	String resta = "-";
 	String suma = "+";
 	private JButton Reiniciar;
@@ -141,7 +133,7 @@ public class Juego extends JFrame {
 						|| mostrar.getText().endsWith("-")
 						|| mostrar.getText().length() == 0) { //mientras se cumpla esta condicion nos devolverá lo que hay dentro
 					
-					mostrar.setText(mostrar.getText() + valor1); //devolverá  lo que hay dentro + el valor de la imagen que generamos con el random
+					mostrar.setText(mostrar.getText() + valor[0]); //devolverá  lo que hay dentro + el valor de la imagen que generamos con el random
 					dado1.setEnabled(false); //lo que hará es volver inhabilitado el jlabel 
 
 				}
@@ -160,7 +152,7 @@ public class Juego extends JFrame {
 						&& mostrar.getText().endsWith("+")
 						|| mostrar.getText().endsWith("-")
 						|| mostrar.getText().length() == 0) {
-					mostrar.setText(mostrar.getText() + valor2);
+					mostrar.setText(mostrar.getText() + valor[1]);
 
 					dado2.setEnabled(false);
 				}
@@ -181,7 +173,7 @@ public class Juego extends JFrame {
 						&& mostrar.getText().endsWith("+")
 						|| mostrar.getText().endsWith("-")
 						|| mostrar.getText().length() == 0) {
-					mostrar.setText(mostrar.getText() + valor3);
+					mostrar.setText(mostrar.getText() + valor[2]);
 					dado3.setEnabled(false);
 
 				}
@@ -202,7 +194,7 @@ public class Juego extends JFrame {
 						&& mostrar.getText().endsWith("+")
 						|| mostrar.getText().endsWith("-")
 						|| mostrar.getText().length() == 0) {
-					mostrar.setText(mostrar.getText() + valor4);
+					mostrar.setText(mostrar.getText() + valor[3]);
 					dado4.setEnabled(false);
 
 				}
@@ -222,7 +214,7 @@ public class Juego extends JFrame {
 						&& mostrar.getText().endsWith("+")
 						|| mostrar.getText().endsWith("-")
 						|| mostrar.getText().length() == 0) {
-					mostrar.setText(mostrar.getText() + valor5);
+					mostrar.setText(mostrar.getText() + valor[4]);
 					dado5.setEnabled(false);
 
 				}
@@ -514,7 +506,7 @@ public class Juego extends JFrame {
 							.charAt(18))); //DEVOLVERÁ EL ULTIMO CARACTER
 					
 					System.out.println( operacion);
-					if ( operacion <=0|| operacion != valor ) {
+					if ( operacion <=0|| operacion != valor[5] ) {
 						
 						textoresultado.setText("INTENTALO DE NUEVO");
 					} else {
@@ -534,7 +526,7 @@ public class Juego extends JFrame {
 					int total = Integer.parseInt(dosValores);
 					
 					
-					if (valor != total || total <=0) {
+					if (valor[5] != total || total <=0) {
 						textoresultado.setText("INTENTALO DE NUEVO");
 					} else {
 						textoresultado.setText("CORRECTO");
@@ -577,33 +569,51 @@ public class Juego extends JFrame {
 	
 	public void generarimagenes(){
 		
+		//DADO1
+		img[0]=new ImageIcon(getClass().getResource(
+				"img/dado" + String.valueOf(valor[0] = random.nextInt(3) + 1)
+				+ "_3.png"));
 		
 		dado1.setEnabled(true);
-		dado1.setIcon(new ImageIcon(getClass().getResource(
-				"img/dado" + String.valueOf(valor = random.nextInt(3) + 1)
-						+ "_3.png")));
+		dado1.setIcon(img[0]);
+		
+		
+		//dado2
+		
+		img[1]=new ImageIcon(getClass().getResource(
+				"img/dado" + String.valueOf(valor[1] = random.nextInt(3) + 1)
+				+ "_3.png"));
 		dado2.setEnabled(true);
-		dado2.setIcon(new ImageIcon(getClass().getResource(
-				"img/dado" + String.valueOf(valor2 = random.nextInt(3) + 1)
-						+ "_3.png")));
+		dado2.setIcon(img[1]);
+		
+		//DADO3
+		img[2]=new ImageIcon(getClass().getResource(
+				"img/dado" + String.valueOf(valor[2]= random.nextInt(3) + 1)
+				+ "_3.png"));
 		dado3.setEnabled(true);
-		dado3.setIcon(new ImageIcon(getClass().getResource(
-				"img/dado" + String.valueOf(valor3 = random.nextInt(3) + 1)
-						+ "_3.png")));
+		dado3.setIcon(img[2]);
+		
+		//DADO4
+		img[3]=new ImageIcon(getClass().getResource(
+				"img/dado" + String.valueOf(valor[3] = random.nextInt(6) + 1)
+				+ "_6.png"));
 		dado4.setEnabled(true);
-		dado4.setIcon(new ImageIcon(getClass().getResource(
-				"img/dado" + String.valueOf(valor4 = random.nextInt(6) + 1)
-						+ "_6.png")));
+		dado4.setIcon(img[3]);
 		
+		
+		//DADO5
+		img[4]=new ImageIcon(getClass().getResource(
+				"img/dado" + String.valueOf(valor[4]= random.nextInt(6) + 1)
+				+ "_6.png"));
 		dado5.setEnabled(true);
-		dado5.setIcon(new ImageIcon(getClass().getResource(
-				"img/dado" + String.valueOf(valor5 = random.nextInt(6) + 1)
-						+ "_6.png")));
+		dado5.setIcon(img[4]);
 		
-	
-		dado6.setIcon(new ImageIcon(getClass().getResource(
-				"img/dode" + String.valueOf(valor = random.nextInt(12) + 1)
-						+ ".png")));
+		//DADO6
+		img[5]=new ImageIcon(getClass().getResource(
+				"img/dode" + String.valueOf(valor[5] = random.nextInt(12) + 1)
+				+ ".png"));
+		
+		dado6.setIcon(img[5]);
 		
 	}
 }
