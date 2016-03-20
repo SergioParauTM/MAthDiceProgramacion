@@ -17,15 +17,19 @@ import javax.swing.JButton;
 import Juego.Jugador;
 
 public class Login extends JFrame {
+	
+	private String nombre, pApellido,seApellido;
+	int edad;
 
 	private JPanel contentPane;
  private JTextField Nombre;
-	private JTextField Apellidos;
+	private JTextField Primerapellido;
 	private JTextField Edad;
 	private JTextField texto;
-	private String nombre ;
+	
 	private Jugador jugador;
 	private Juego juego;
+	private JTextField Secapellido;
 	
 	
 
@@ -48,14 +52,23 @@ public class Login extends JFrame {
 	}
 
 	public void lanzarJuego() {
+
+		jugador = new Jugador(nombre,pApellido,seApellido,edad);
+		jugador.toString();
+		
+		
 		 juego = new Juego();
-		juego.setVisible(true);
-		this.dispose();
-		juego.generarimagenes();
-		juego.setJugador(jugador);
+		 principal jpanel = new principal();
+		 jpanel.setVisible(true);
+			this.dispose();
+		
+		
 
 	}
 	
+
+	
+
 
 	/**
 	 * Create the frame.
@@ -63,7 +76,7 @@ public class Login extends JFrame {
 	public Login() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 399, 310);
+		setBounds(100, 100, 480, 418);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -77,12 +90,12 @@ public class Login extends JFrame {
 		lblNombre.setBounds(10, 52, 46, 14);
 		contentPane.add(lblNombre);
 
-		JLabel lblApellidos = new JLabel("Apellidos");
-		lblApellidos.setBounds(10, 89, 46, 14);
+		JLabel lblApellidos = new JLabel("1\u00BAApellido");
+		lblApellidos.setBounds(10, 89, 78, 14);
 		contentPane.add(lblApellidos);
 
 		JLabel lblEdad = new JLabel("Edad");
-		lblEdad.setBounds(10, 124, 46, 14);
+		lblEdad.setBounds(10, 190, 46, 14);
 		contentPane.add(lblEdad);
 	
 
@@ -91,25 +104,34 @@ public class Login extends JFrame {
 		contentPane.add(Nombre);
 		Nombre.setColumns(10);
 
-		Apellidos = new JTextField();
-		Apellidos.setBounds(98, 86, 182, 20);
-		contentPane.add(Apellidos);
-		Apellidos.setColumns(10);
+		Primerapellido = new JTextField();
+		Primerapellido.setBounds(98, 86, 182, 20);
+		contentPane.add(Primerapellido);
+		Primerapellido.setColumns(10);
 
 		Edad = new JTextField();
-		Edad.setBounds(98, 121, 182, 20);
+		Edad.setBounds(98, 187, 182, 20);
 		contentPane.add(Edad);
 		Edad.setColumns(10);
 
 		texto = new JTextField();
 		texto.setEditable(false);
-		texto.setBounds(44, 197, 287, 53);
+		texto.setBounds(44, 263, 287, 53);
 		contentPane.add(texto);
 		texto.setColumns(10);
 
 		JButton btnNewButton = new JButton("A jugar");
-		btnNewButton.setBounds(81, 166, 250, 20);
+		btnNewButton.setBounds(81, 232, 250, 20);
 		contentPane.add(btnNewButton);
+		
+		JLabel lblApellido = new JLabel("2\u00BA Apellido");
+		lblApellido.setBounds(10, 136, 78, 14);
+		contentPane.add(lblApellido);
+		
+		Secapellido = new JTextField();
+		Secapellido.setColumns(10);
+		Secapellido.setBounds(98, 133, 182, 20);
+		contentPane.add(Secapellido);
 		
 	
 		
@@ -123,43 +145,13 @@ public class Login extends JFrame {
 				
 				if (e.getSource() == btnNewButton) {
 					
-					try{
-						
-					
-					if (Nombre.getText().length() != 0
-							&& Apellidos.getText().length() != 0
-							&& Edad.getText().length() != 0  ) {
-							
-						
-						
-						
-						
-						jugador = new Jugador();
-						
-						jugador.setNombre(Nombre.getText().toString());
-						jugador.setApellido(Apellidos.getText().toString());
-						jugador.setEdad(Integer.parseInt(Edad.getText().toString()));
-						
-					
-						
-						
-						lanzarJuego();
-						
-
-					} else {
-						texto.setText("falta completar algún campo");
-						
-					}
-					}catch(Exception ev){
-						texto.setText("falta  algún campo");
-					}
-
-				}
+					datosUser();
+				
 				
 			}
 				
 		
-			
+			}
 
 		});
 		
@@ -168,8 +160,45 @@ public class Login extends JFrame {
 
 	}
 	
+	public void datosUser(){
+		
+		
+		try{
+			
+			
+			if (Nombre.getText().length() != 0
+					&& Primerapellido.getText().length() != 0
+					&& Edad.getText().length() != 0 && Primerapellido.getText().length() != 0  ) {
+					
+				
+				
+				
+				
+				
+				
+				nombre = Nombre.getText().toString();
+				pApellido=Primerapellido.getText().toString();
+				seApellido= Secapellido.getText().toString();
+				edad = Integer.parseInt(Edad.getText().toString());
+				
+				
+				
+				lanzarJuego();
+				
+
+			} else {
+				texto.setText("falta completar algún campo");
+				
+			}
+			}catch(Exception ev){
+				texto.setText("se ha producido un error");
+			}
+
+		
+	}
 	
 	
-
-
+	
+	
+	
 }

@@ -25,11 +25,11 @@ import java.awt.event.MouseEvent;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-public class Juego extends JFrame {
+public class Juego extends JPanel{
 	
 	//Declaramos las variables
 
-	private JPanel contentPane;
+
 
 	private Random random = new Random();
 
@@ -48,34 +48,13 @@ int[] valor = new int [6];
 
 	private JLabel lbBienvenidoalJuego;
 	private JTextField mostrar;
-	private JTextField dodeNotocar;
 
-	public static void main(String[] args) {
-		
-		
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				
-				try {
-					
-					Login frame = new Login();
-					frame.setVisible(true);
-					
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
-	}
+	
 	
 	
 	//creamos el metodo que nos devolverá el nombre que hay en la clase jugador
 
-	public void setJugador(Jugador jugador) {
-
-		this.jugador = jugador;
+	public void setJugador() {
 
 		lbBienvenidoalJuego.setText("Bienvenido al juego  "
 				+ jugador.getNombre().toString());
@@ -86,43 +65,36 @@ int[] valor = new int [6];
 
 	public Juego() {
 		
+
 	
+		setBackground(new Color(135, 206, 250));
+		setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		jugador = new Jugador(); //llamamos a la clase Jugador
-		
-		//inicializamos los componentes de la aplicacion
-
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1277, 761);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(135, 206, 250));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		setLayout(null);
 
 		mostrar = new JTextField();
 		mostrar.setEnabled(false);
 		mostrar.setEditable(false);
 		mostrar.setFont(new Font("Century", Font.BOLD, 25));
 		mostrar.setBounds(785, 189, 371, 78);
-		contentPane.add(mostrar);
+		add(mostrar);
 		mostrar.setColumns(10);
 
 		lbBienvenidoalJuego = new JLabel(); //nos devolvera el valor del metodo setJugador
 		lbBienvenidoalJuego.setFont(new Font("Verdana", Font.BOLD, 16));
 		lbBienvenidoalJuego.setBounds(802, 11, 354, 21);
-		contentPane.add(lbBienvenidoalJuego);
+		add(lbBienvenidoalJuego);
 
 		JLabel textoresultado = new JLabel();
 		textoresultado.setFont(new Font("Comic Sans MS", Font.BOLD, 23));
 		textoresultado.setHorizontalAlignment(SwingConstants.CENTER);
 		textoresultado.setBounds(766, 437, 413, 99);
-		contentPane.add(textoresultado);
+		add(textoresultado);
 
 		dado1 = new JLabel();
 		dado1.setBackground(Color.LIGHT_GRAY);
 		dado1.setBounds(10, 31, 150, 150);
-		contentPane.add(dado1);
+		add(dado1);
 		
 		dado1.addMouseListener(new MouseAdapter() { //esta funcion hace referencia a cuando hagamos click en la imagen
 
@@ -144,7 +116,7 @@ int[] valor = new int [6];
 	 dado2 = new JLabel();
 		dado2.setBackground(Color.LIGHT_GRAY);
 		dado2.setBounds(170, 34, 150, 150);
-		contentPane.add(dado2);
+		add(dado2);
 		
 		dado2.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -163,7 +135,7 @@ int[] valor = new int [6];
 		 dado3 = new JLabel();
 		dado3.setBackground(Color.LIGHT_GRAY);
 		dado3.setBounds(334, 34, 150, 150);
-		contentPane.add(dado3);
+		add(dado3);
 		
 
 		dado3.addMouseListener(new MouseAdapter() {
@@ -185,7 +157,7 @@ int[] valor = new int [6];
 		 dado4 = new JLabel();
 		dado4.setBackground(Color.LIGHT_GRAY);
 		dado4.setBounds(180, 195, 150, 150);
-		contentPane.add(dado4);
+		add(dado4);
 		
 
 		dado4.addMouseListener(new MouseAdapter() {
@@ -205,7 +177,7 @@ int[] valor = new int [6];
 		 dado5 = new JLabel();
 		dado5.setBackground(Color.LIGHT_GRAY);
 		dado5.setBounds(10, 192, 150, 150);
-		contentPane.add(dado5);
+		add(dado5);
 		
 
 		dado5.addMouseListener(new MouseAdapter() {
@@ -225,16 +197,8 @@ int[] valor = new int [6];
 		 dado6 = new JLabel();
 		dado6.setBackground(Color.LIGHT_GRAY);
 		dado6.setBounds(80, 423, 150, 150);
-		contentPane.add(dado6);
-		dado6.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				
-				
-				dodeNotocar.setText("No se debe presionar el dode");
-				dodeNotocar.setEnabled(true);
-
-			}
-		});
+		add(dado6);
+	
 		
 		
 		//FIN JLABEL IMAGENES
@@ -261,7 +225,7 @@ int[] valor = new int [6];
 			}
 		});
 		btnNewButton.setBounds(785, 59, 115, 99);
-		contentPane.add(btnNewButton);
+		add(btnNewButton);
 
 		
 		//fin operador suma
@@ -287,11 +251,11 @@ int[] valor = new int [6];
 		JLabel resultado = new JLabel(""); // NOS DEVOLVERA EL RESULTADO DE LA OPERACION
 		resultado.setHorizontalAlignment(SwingConstants.CENTER);
 		resultado.setFont(new Font("Perpetua Titling MT", Font.BOLD, 19));
-		resultado.setBounds(834, 373, 290, 53);
-		contentPane.add(resultado);
+		resultado.setBounds(802, 373, 290, 53);
+		add(resultado);
 
 		btnNewButton_1.setBounds(1035, 59, 121, 99);
-		contentPane.add(btnNewButton_1);
+		add(btnNewButton_1);
 
 		
 		//BOTON QUE REALIZARÁ LAS OPERACIONES 
@@ -539,7 +503,7 @@ int[] valor = new int [6];
 			}
 		});
 		btnNewButton_2.setBounds(785, 292, 371, 53);
-		contentPane.add(btnNewButton_2);
+		add(btnNewButton_2);
 
 		 Reiniciar = new JButton("REINICIAR");
 		 Reiniciar.setEnabled(false);
@@ -556,15 +520,7 @@ int[] valor = new int [6];
 			}
 		});
 		Reiniciar.setBounds(855, 564, 247, 66);
-		contentPane.add(Reiniciar);
-		
-		dodeNotocar = new JTextField();
-		dodeNotocar.setBackground(new Color(135, 206, 250));
-		dodeNotocar.setBounds(295, 460, 230, 78);
-		contentPane.add(dodeNotocar);
-		dodeNotocar.setColumns(10);
-		dodeNotocar.setEnabled(false);
-		dodeNotocar.setEditable(false);
+		add(Reiniciar);
 	}
 	
 	public void generarimagenes(){
@@ -616,4 +572,11 @@ int[] valor = new int [6];
 		dado6.setIcon(img[5]);
 		
 	}
+	
+	
+	
+	
+	
+	
+	
 }

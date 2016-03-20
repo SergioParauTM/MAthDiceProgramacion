@@ -8,7 +8,8 @@ public class Jugador {
 
 	
 	private String nombre ;
-	private String apellido  ;
+	private String PrimerApellido  ;
+	private String segundoApellido  ;
 	
 	private int puntos ;
 	private int edad ;
@@ -18,18 +19,25 @@ public class Jugador {
 	}
 	
 	
+	
+	
+	public Jugador(String nombre, String primerApellido, String segundoApellido, int edad) {
+		this.nombre = nombre;
+		PrimerApellido = primerApellido;
+		this.segundoApellido = segundoApellido;
+		this.edad = edad;
+	}
+
+
+
+
 	public String getNombre() {
 		return nombre;
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getApellido() {
-		return apellido;
-	}
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
+	
 	public int getPuntos() {
 		return puntos;
 	}
@@ -45,10 +53,39 @@ public class Jugador {
 	}
 
 
-	public  String print() {
-		return( "El jugador " + " " + nombre +" "   + apellido
-				+ " tiene " + puntos + " puntos" + " y la edad de " +edad + " años" );
+	public String getPrimerApellido() {
+		return PrimerApellido;
 	}
+
+
+	public void setPrimerApellido(String primerApellido) {
+		PrimerApellido = primerApellido;
+	}
+
+
+	public String getSegundoApellido() {
+		return segundoApellido;
+	}
+
+
+	public void setSegundoApellido(String segundoApellido) {
+		this.segundoApellido = segundoApellido;
+	}
+
+
+
+
+	@Override
+	public String toString() {
+		String sf = "Jugador [nombre=" + nombre + ", PrimerApellido=" + PrimerApellido + ", segundoApellido="
+				+ segundoApellido + ", puntos=" + puntos + ", edad=" + edad + "]";
+		
+		System.out.println(sf);
+		
+		return sf;
+	}
+
+
 
 
 
