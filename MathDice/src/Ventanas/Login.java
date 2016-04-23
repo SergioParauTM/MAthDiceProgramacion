@@ -26,7 +26,7 @@ public class Login extends JFrame {
 	private JTextField Primerapellido;
 	private JTextField Edad;
 	private JTextField texto;
-	
+	private Perfil perfil;
 	private Jugador jugador;
 	private Juego juego;
 	private JTextField Secapellido;
@@ -34,46 +34,26 @@ public class Login extends JFrame {
 	
 
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login frame = new Login();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-
-	}
-
 	public void lanzarJuego() {
-
-		jugador = new Jugador(nombre,pApellido,seApellido,edad);
-		jugador.toString();
-		
-		
-		 juego = new Juego();
+		// juego.setJugador(jugador);
 		 principal jpanel = new principal();
+		 jpanel.setJugador(jugador);
+	
 		 jpanel.setVisible(true);
 			this.dispose();
 		
-		
-
+	
 	}
 	
 
-	
 
 
 	/**
 	 * Create the frame.
 	 */
 	public Login() {
+		
+		
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 480, 418);
@@ -145,7 +125,36 @@ public class Login extends JFrame {
 				
 				if (e.getSource() == btnNewButton) {
 					
-					datosUser();
+					try{
+						
+						
+						if (Nombre.getText().length() != 0
+								&& Primerapellido.getText().length() != 0
+								&& Edad.getText().length() != 0 && Primerapellido.getText().length() != 0) {
+								
+							
+							nombre = Nombre.getText().toString();
+							pApellido=Primerapellido.getText().toString();
+							seApellido= Secapellido.getText().toString();
+							edad = Integer.parseInt(Edad.getText().toString());
+									
+
+								jugador = new Jugador(nombre,pApellido,seApellido,edad);
+							
+							
+							lanzarJuego();
+							
+							
+						
+
+						} else {
+							texto.setText("falta completar algún campo");
+							
+						}
+						}catch(Exception ev){
+							texto.setText("se ha producido un error");
+						}
+
 				
 				
 			}
@@ -160,44 +169,7 @@ public class Login extends JFrame {
 
 	}
 	
-	public void datosUser(){
-		
-		
-		try{
-			
-			
-			if (Nombre.getText().length() != 0
-					&& Primerapellido.getText().length() != 0
-					&& Edad.getText().length() != 0 && Primerapellido.getText().length() != 0  ) {
-					
-				
-				
-				
-				
-				
-				
-				nombre = Nombre.getText().toString();
-				pApellido=Primerapellido.getText().toString();
-				seApellido= Secapellido.getText().toString();
-				edad = Integer.parseInt(Edad.getText().toString());
-				
-				
-				
-				lanzarJuego();
-				
 
-			} else {
-				texto.setText("falta completar algún campo");
-				
-			}
-			}catch(Exception ev){
-				texto.setText("se ha producido un error");
-			}
-
-		
-	}
-	
-	
 	
 	
 	

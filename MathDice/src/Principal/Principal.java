@@ -2,16 +2,15 @@ package Principal;
 
 import javax.swing.JDialog;
 
-import Ventanas.Login;
-
+import Inicio.Inicio;
 public class Principal {
 
 	public static void main (String args[]){
 		
 	
-Login login = new Login();
+Inicio inicio = new Inicio();
 
-login.setVisible(true);
+inicio.setVisible(true);
 	}
 
 

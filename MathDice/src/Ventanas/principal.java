@@ -25,6 +25,8 @@ public class principal extends JFrame  {
 	Perfil perfil = new Perfil();
 	Login login = new Login();
 	Jugador jugador = new Jugador();
+	
+	
 
 	private JPanel contentPane;
 	static principal frame;
@@ -40,6 +42,14 @@ public class principal extends JFrame  {
 	/**
 	 * Create the frame.
 	 */
+	public void setJugador(Jugador jugador){
+		this.jugador=jugador;
+
+			juego.setJugador(jugador);
+		perfil.setJugador(jugador);
+	}
+
+	
 	
 	
 	public principal() {
@@ -52,15 +62,13 @@ public class principal extends JFrame  {
 		
 		juego.generarimagenes();
         menuBar();
+
        
-      
-       //juego.setJugador();
-       //perfil.setJugador();
-        
-     
-	
+ 
 	        contentPane.add(juego, JUEGO );
 	    	contentPane.add(perfil, PERFIL);
+	    	
+	    
 	
 	  
 	     // Adding the contentPane (JPanel) and buttonPanel to JFrame.

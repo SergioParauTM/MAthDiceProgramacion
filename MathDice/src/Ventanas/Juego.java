@@ -54,10 +54,12 @@ int[] valor = new int [6];
 	
 	//creamos el metodo que nos devolverá el nombre que hay en la clase jugador
 
-	public void setJugador() {
+	public void setJugador(Jugador jugador) {
+		this.jugador=jugador;
 
 		lbBienvenidoalJuego.setText("Bienvenido al juego  "
 				+ jugador.getNombre().toString());
+		
 
 	}
 	

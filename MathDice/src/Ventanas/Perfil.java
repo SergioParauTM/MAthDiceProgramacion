@@ -9,83 +9,107 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class Perfil extends JPanel {
 
 	private Jugador jugador;
-	private JTextField nombre;
-	private JTextField primerApellido;
-	private JTextField segundoApellido;
-	private JTextField edad;
 	
 	
 	
+	JLabel nombre, primerApellido,SegundoApellido,Edad;
+	private JTextField Nombre;
+	private JTextField txtPrimerApellido;
+	private JTextField txtSegundoApellido;
+	private JTextField txtEdad;
 	
-	public void setJugador() {
-		nombre.setText(jugador.getNombre().toString() + "asdasdasdasdasd");
-		primerApellido.setText(jugador.getPrimerApellido());
-		segundoApellido.setText(jugador.getSegundoApellido());
-		edad.setText(String.valueOf(jugador.getEdad()));
-		
 
-	}
+	public void setJugador(Jugador jugador) {
+		this.jugador = jugador;
+			
+		nombre.setText(jugador.getNombre().toString());
+		primerApellido.setText(jugador.getPrimerApellido().toString());
+		SegundoApellido.setText(jugador.getSegundoApellido().toString());
+		Edad.setText(String.valueOf(jugador.getEdad()).toString());
+			
+
 	
+
+		}
 	
 	public Perfil() {
 		setLayout(null);
 		
-		nombre = new JTextField();
-		nombre.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		nombre.setEditable(false);
-		nombre.setBounds(83, 115, 208, 53);
-		nombre.setColumns(10);
-		add(nombre);
-		
-		primerApellido = new JTextField();
-		primerApellido.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		primerApellido.setEditable(false);
-		primerApellido.setBounds(390, 201, 174, 45);
-		primerApellido.setColumns(10);
-		add(primerApellido);
-		
-		JLabel label_1 = new JLabel("1\u00BAApellido");
-		label_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		label_1.setBounds(390, 176, 132, 14);
-		add(label_1);
-		
-		JLabel label_2 = new JLabel("2\u00BA Apellido");
-		label_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		label_2.setBounds(380, 256, 142, 14);
-		add(label_2);
-		
-		segundoApellido = new JTextField();
-		segundoApellido.setEditable(false);
-		segundoApellido.setBounds(390, 281, 174, 53);
-		segundoApellido.setColumns(10);
-		add(segundoApellido);
-		
-		JLabel label_3 = new JLabel("Edad");
-		label_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		label_3.setBounds(379, 358, 89, 14);
-		add(label_3);
-		
-		edad = new JTextField();
-		edad.setEditable(false);
-		edad.setBounds(390, 388, 186, 65);
-		edad.setColumns(10);
-		add(edad);
-		
 		JLabel fotoPerfil = new JLabel("");
-		fotoPerfil.setBounds(35, 179, 256, 220);
+		fotoPerfil.setBounds(100, 120, 256, 220);
 		add(fotoPerfil);
 
-		//DADO1
-				ImageIcon fotoperfil =new ImageIcon(getClass().getResource(
+
+		
+		
+			ImageIcon fotoperfil =new ImageIcon(getClass().getResource(
 						"img/bb8.png"));
 				
 				fotoPerfil.setEnabled(true);
 				fotoPerfil.setIcon(fotoperfil);
+				
+				 nombre = new JLabel();
+				 nombre.setHorizontalAlignment(SwingConstants.LEFT);
+				 nombre.setText("asd");
+				 nombre.setFont(new Font("Tahoma", Font.BOLD, 19));
+				nombre.setBounds(473, 120, 155, 24);
+				add(nombre);
+				
+				 primerApellido = new JLabel();
+				 primerApellido.setHorizontalAlignment(SwingConstants.LEFT);
+				 primerApellido.setFont(new Font("Tahoma", Font.BOLD, 19));
+				 primerApellido.setText("asdasd");
+				primerApellido.setBounds(493, 178, 155, 20);
+				add(primerApellido);
+				
+				 SegundoApellido = new JLabel();
+				 SegundoApellido.setText("qweqweqwe");
+				 SegundoApellido.setFont(new Font("Tahoma", Font.BOLD, 19));
+				 SegundoApellido.setHorizontalAlignment(SwingConstants.LEFT);
+				SegundoApellido.setBounds(524, 226, 155, 20);
+				add(SegundoApellido);
+				
+				 Edad = new JLabel();
+				 Edad.setHorizontalAlignment(SwingConstants.LEFT);
+				 Edad.setText("asdasdad");
+				 Edad.setFont(new Font("Tahoma", Font.BOLD, 19));
+				Edad.setBounds(524, 293, 140, 28);
+				add(Edad);
+				
+				Nombre = new JTextField();
+				Nombre.setEditable(false);
+				Nombre.setText("Nombre");
+				Nombre.setBounds(366, 125, 97, 20);
+				add(Nombre);
+				Nombre.setColumns(10);
+				
+				txtPrimerApellido = new JTextField();
+				txtPrimerApellido.setEditable(false);
+				txtPrimerApellido.setText("Primer Apellido");
+				txtPrimerApellido.setBounds(367, 182, 108, 20);
+				add(txtPrimerApellido);
+				txtPrimerApellido.setColumns(10);
+				
+				txtSegundoApellido = new JTextField();
+				txtSegundoApellido.setText("Segundo Apellido");
+				txtSegundoApellido.setEditable(false);
+				txtSegundoApellido.setBounds(366, 230, 155, 20);
+				add(txtSegundoApellido);
+				txtSegundoApellido.setColumns(10);
+				
+				txtEdad = new JTextField();
+				txtEdad.setText("Edad");
+				txtEdad.setEditable(false);
+				txtEdad.setBounds(366, 301, 155, 20);
+				add(txtEdad);
+				txtEdad.setColumns(10);
+				
+				
 		
 	}
-
 }
