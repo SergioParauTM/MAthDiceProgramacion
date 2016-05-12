@@ -11,18 +11,40 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import java.sql.Connection;
+
+import BBDD.AccesoBD;
+import BBDD.usuariosDB;
+
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
 public class Perfil extends JPanel {
 
 	private Jugador jugador;
 	
 	
 	
-	JLabel nombre, primerApellido,SegundoApellido,Edad;
+	JTextField nombre;
+	JTextField primerApellido;
+	JTextField SegundoApellido;
+	JTextField Edad;
 	private JTextField Nombre;
 	private JTextField txtPrimerApellido;
 	private JTextField txtSegundoApellido;
 	private JTextField txtEdad;
+	private JButton Actualizar;
 	
+
+	private usuariosDB udb;
+	private JTextField puntos;
+	private JTextField puntostotales;
+	private JLabel lblNewLabel;
+	private JTextField txtMensaje;
 
 	public void setJugador(Jugador jugador) {
 		this.jugador = jugador;
@@ -31,84 +53,183 @@ public class Perfil extends JPanel {
 		primerApellido.setText(jugador.getPrimerApellido().toString());
 		SegundoApellido.setText(jugador.getSegundoApellido().toString());
 		Edad.setText(String.valueOf(jugador.getEdad()).toString());
-			
+		puntostotales.setText(String.valueOf(jugador.getPuntos()).toString());
 
-	
+	udb = new usuariosDB(jugador);
 
 		}
 	
 	public Perfil() {
-		setLayout(null);
 		
 		JLabel fotoPerfil = new JLabel("");
-		fotoPerfil.setBounds(100, 120, 256, 220);
-		add(fotoPerfil);
-
-
-		
-		
 			ImageIcon fotoperfil =new ImageIcon(getClass().getResource(
 						"img/bb8.png"));
 				
 				fotoPerfil.setEnabled(true);
 				fotoPerfil.setIcon(fotoperfil);
 				
-				 nombre = new JLabel();
+				 nombre = new JTextField();
 				 nombre.setHorizontalAlignment(SwingConstants.LEFT);
 				 nombre.setText("asd");
-				 nombre.setFont(new Font("Tahoma", Font.BOLD, 19));
-				nombre.setBounds(473, 120, 155, 24);
-				add(nombre);
+				 nombre.setFont(new Font("Tahoma", Font.BOLD, 15));
 				
-				 primerApellido = new JLabel();
+				 primerApellido = new JTextField();
 				 primerApellido.setHorizontalAlignment(SwingConstants.LEFT);
-				 primerApellido.setFont(new Font("Tahoma", Font.BOLD, 19));
+				 primerApellido.setFont(new Font("Tahoma", Font.BOLD, 15));
 				 primerApellido.setText("asdasd");
-				primerApellido.setBounds(493, 178, 155, 20);
-				add(primerApellido);
 				
-				 SegundoApellido = new JLabel();
+				 SegundoApellido = new JTextField();
 				 SegundoApellido.setText("qweqweqwe");
-				 SegundoApellido.setFont(new Font("Tahoma", Font.BOLD, 19));
+				 SegundoApellido.setFont(new Font("Tahoma", Font.BOLD, 15));
 				 SegundoApellido.setHorizontalAlignment(SwingConstants.LEFT);
-				SegundoApellido.setBounds(524, 226, 155, 20);
-				add(SegundoApellido);
 				
-				 Edad = new JLabel();
+				 Edad = new JTextField();
 				 Edad.setHorizontalAlignment(SwingConstants.LEFT);
 				 Edad.setText("asdasdad");
-				 Edad.setFont(new Font("Tahoma", Font.BOLD, 19));
-				Edad.setBounds(524, 293, 140, 28);
-				add(Edad);
+				 Edad.setFont(new Font("Tahoma", Font.BOLD, 15));
 				
 				Nombre = new JTextField();
 				Nombre.setEditable(false);
 				Nombre.setText("Nombre");
-				Nombre.setBounds(366, 125, 97, 20);
-				add(Nombre);
 				Nombre.setColumns(10);
 				
 				txtPrimerApellido = new JTextField();
 				txtPrimerApellido.setEditable(false);
 				txtPrimerApellido.setText("Primer Apellido");
-				txtPrimerApellido.setBounds(367, 182, 108, 20);
-				add(txtPrimerApellido);
 				txtPrimerApellido.setColumns(10);
 				
 				txtSegundoApellido = new JTextField();
 				txtSegundoApellido.setText("Segundo Apellido");
 				txtSegundoApellido.setEditable(false);
-				txtSegundoApellido.setBounds(366, 230, 155, 20);
-				add(txtSegundoApellido);
 				txtSegundoApellido.setColumns(10);
 				
 				txtEdad = new JTextField();
 				txtEdad.setText("Edad");
 				txtEdad.setEditable(false);
-				txtEdad.setBounds(366, 301, 155, 20);
-				add(txtEdad);
 				txtEdad.setColumns(10);
 				
+				Actualizar = new JButton("Actualizar");
+				Actualizar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+
+						Connection c=AccesoBD.getConexion();
+					if(c==null){
+						jugador.setNombre(nombre.getText());
+						jugador.setPrimerApellido(primerApellido.getText());
+						jugador.setSegundoApellido(SegundoApellido.getText());
+						jugador.setEdad(Integer.valueOf(Edad.getText()));
+		
+					udb.ActualizarPuntiacion(AccesoBD.getConexion());
+						txtMensaje.setText("ACTUALIZADO");
+					}else{
+						
+						txtMensaje.setText("ERROR AL CONECTAR CON LA BD");
+					}
+					}
+				});
+				
+				puntos = new JTextField();
+				puntos.setEditable(false);
+				puntos.setText("Puntos");
+				puntos.setColumns(10);
+				
+				puntostotales = new JTextField();
+				puntostotales.setEditable(false);
+				puntostotales.setText("asdasdad");
+				puntostotales.setHorizontalAlignment(SwingConstants.LEFT);
+				puntostotales.setFont(new Font("Tahoma", Font.BOLD, 15));
+				
+				lblNewLabel = new JLabel("Mensaje");
+				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));
+				lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+				
+				txtMensaje = new JTextField();
+				txtMensaje.setHorizontalAlignment(SwingConstants.LEFT);
+				txtMensaje.setText("mensaje");
+				txtMensaje.setFont(new Font("Tahoma", Font.PLAIN, 18));
+				txtMensaje.setEditable(false);
+				txtMensaje.setColumns(10);
+				GroupLayout groupLayout = new GroupLayout(this);
+				groupLayout.setHorizontalGroup(
+					groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addContainerGap()
+									.addComponent(fotoPerfil, GroupLayout.PREFERRED_SIZE, 256, GroupLayout.PREFERRED_SIZE)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addGap(34)
+											.addComponent(txtMensaje, GroupLayout.PREFERRED_SIZE, 543, GroupLayout.PREFERRED_SIZE))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addGap(164)
+											.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE))))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(24)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(Actualizar, GroupLayout.PREFERRED_SIZE, 542, GroupLayout.PREFERRED_SIZE)
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+											.addGroup(groupLayout.createSequentialGroup()
+												.addComponent(txtPrimerApellido, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(primerApellido, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE))
+											.addGroup(groupLayout.createSequentialGroup()
+												.addComponent(Nombre, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE)
+												.addGap(18)
+												.addComponent(nombre, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE))
+											.addGroup(groupLayout.createSequentialGroup()
+												.addComponent(txtSegundoApellido, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(SegundoApellido, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE))
+											.addGroup(groupLayout.createSequentialGroup()
+												.addComponent(txtEdad, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(Edad, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE))
+											.addGroup(groupLayout.createSequentialGroup()
+												.addComponent(puntos, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE)
+												.addGap(18)
+												.addComponent(puntostotales, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE))))))
+							.addContainerGap(283, Short.MAX_VALUE))
+				);
+				groupLayout.setVerticalGroup(
+					groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(35)
+									.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(txtMensaje, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addContainerGap()
+									.addComponent(fotoPerfil, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(Nombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(nombre, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(primerApellido, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtPrimerApellido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(txtSegundoApellido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(SegundoApellido, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(txtEdad, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(Edad, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(puntos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(puntostotales, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+							.addGap(43)
+							.addComponent(Actualizar, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+							.addGap(131))
+				);
+				setLayout(groupLayout);
+				
+			
 				
 		
 	}

@@ -1,18 +1,23 @@
 package Juego;
 
+import java.sql.Connection;
 
+import javax.swing.JComboBox;
+
+import BBDD.usuariosDB;
 
 public class Jugador {
 	
 
 
-	
+	private String id;
 	private String nombre ;
 	private String PrimerApellido  ;
 	private String segundoApellido  ;
-	
+	usuariosDB jDB;
 	private int puntos ;
 	private int edad ;
+
 	
 	public Jugador(){
 		
@@ -21,11 +26,41 @@ public class Jugador {
 	
 	
 	
+	
+	
+	public Jugador(String id, String nombre, String primerApellido, String segundoApellido, int puntos, int edad) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		PrimerApellido = primerApellido;
+		this.segundoApellido = segundoApellido;
+		this.puntos = puntos;
+		this.edad = edad;
+	}
+
+
+
+
+
+
 	public Jugador(String nombre, String primerApellido, String segundoApellido, int edad) {
 		this.nombre = nombre;
 		PrimerApellido = primerApellido;
 		this.segundoApellido = segundoApellido;
 		this.edad = edad;
+	}
+
+
+	
+
+
+	public String getId() {
+		return id;
+	}
+
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 
@@ -72,18 +107,42 @@ public class Jugador {
 		this.segundoApellido = segundoApellido;
 	}
 
+	public void insertarUsuario(Connection c){
+		jDB = new usuariosDB(this);
+		jDB.insertarUsuario(c);
+	}
+	
+	public void loguearUsuario(JComboBox j,Connection c){
+		jDB = new usuariosDB(this);
+		jDB.JcomboxUser(j, c);
+	}
+	
+	
+	public void Actualizarpuntos(Connection c){
+		jDB = new usuariosDB(this);
+		jDB.ActualizarPuntiacion(c);
+	}
+	
 
-
+	public void ActualizarUser(Connection c){
+		jDB = new usuariosDB(this);
+		jDB.actualizarUser(c);
+	}
+	
 
 	@Override
 	public String toString() {
-		String sf = "Jugador [nombre=" + nombre + ", PrimerApellido=" + PrimerApellido + ", segundoApellido="
-				+ segundoApellido + ", puntos=" + puntos + ", edad=" + edad + "]";
 		
-		System.out.println(sf);
-		
-		return sf;
+		String Resultado = id + "-" +nombre + "  " + PrimerApellido ;
+				
+				
+		return Resultado; 
 	}
+
+
+
+
+	
 
 
 

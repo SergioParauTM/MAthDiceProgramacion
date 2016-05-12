@@ -8,6 +8,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import BBDD.AccesoBD;
+import BBDD.usuariosDB;
+
 import javax.swing.JTextField;
 
 import Juego.Jugador;
@@ -22,6 +26,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
@@ -48,7 +53,12 @@ int[] valor = new int [6];
 
 	private JLabel lbBienvenidoalJuego;
 	private JTextField mostrar;
+	private JLabel puntuacion;
 
+	private usuariosDB udb;
+
+	private String iduser;
+	private int puntosactuales;
 	
 	
 	
@@ -60,7 +70,14 @@ int[] valor = new int [6];
 		lbBienvenidoalJuego.setText("Bienvenido al juego  "
 				+ jugador.getNombre().toString());
 		
+		puntuacion.setText("Tu puntuación actual es de : " + jugador.getPuntos());
+		
+		
+		puntosactuales  = jugador.getPuntos();
+		
+		iduser = jugador.getId();
 
+	
 	}
 	
 	
@@ -477,6 +494,18 @@ int[] valor = new int [6];
 						textoresultado.setText("INTENTALO DE NUEVO");
 					} else {
 						textoresultado.setText("CORRECTO");
+						
+						
+						 Connection c=AccesoBD.getConexion();
+							if(c==null){
+								Jugador j = new Jugador();
+								j.Actualizarpuntos(c);
+							}else{
+								
+							}
+
+						int puntosD = operacion + puntosactuales;
+						puntuacion.setText("Tu puntuación actual es de : " +String.valueOf(puntosD));
 					}
 				} else if (resultado.getText().length() == 20 ) {
 
@@ -494,9 +523,28 @@ int[] valor = new int [6];
 					
 					if (valor[5] != total || total <=0) {
 						textoresultado.setText("INTENTALO DE NUEVO");
+			
 					} else {
+						
 						textoresultado.setText("CORRECTO");
+	
+						 Connection c=AccesoBD.getConexion();
+							if(c==null){
+								Jugador j = new Jugador();
+								j.Actualizarpuntos(c);
+							}else{
+								
+							}
+
+						int puntosD = total + puntosactuales;
+					
+						puntuacion.setText("Tu puntuación actual es de : " +String.valueOf(puntosD));
+						
+						
+						
 					}
+					
+					
 				}
 					
 				if(resultado.getText().length()!=0){
@@ -515,6 +563,7 @@ int[] valor = new int [6];
 				mostrar.setText(null);
 				resultado.setText(null);
 				textoresultado.setText(null);
+			
 			Reiniciar.setEnabled(false);
 				
 				
@@ -523,6 +572,13 @@ int[] valor = new int [6];
 		});
 		Reiniciar.setBounds(855, 564, 247, 66);
 		add(Reiniciar);
+		
+		puntuacion = new JLabel("New label");
+		puntuacion.setBounds(802, 34, 374, 14);
+		add(puntuacion);
+		
+
+
 	}
 	
 	public void generarimagenes(){
@@ -575,10 +631,10 @@ int[] valor = new int [6];
 		
 	}
 	
+
 	
 	
-	
-	
+
 	
 	
 }
