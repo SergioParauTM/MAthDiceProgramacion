@@ -45,10 +45,12 @@ public class Perfil extends JPanel {
 	private JTextField puntostotales;
 	private JLabel lblNewLabel;
 	private JTextField txtMensaje;
+	String resultado;
 
 	public void setJugador(Jugador jugador) {
 		this.jugador = jugador;
-			
+		
+
 		nombre.setText(jugador.getNombre().toString());
 		primerApellido.setText(jugador.getPrimerApellido().toString());
 		SegundoApellido.setText(jugador.getSegundoApellido().toString());
@@ -59,8 +61,18 @@ public class Perfil extends JPanel {
 
 		}
 	
-	public Perfil() {
+	public void getResultado(Jugador j){
+		this.jugador = j;
 		
+		resultado=j.getResultado();
+		
+		System.out.println(resultado);
+		
+		
+	}
+	
+	public Perfil() {
+	
 		JLabel fotoPerfil = new JLabel("");
 			ImageIcon fotoperfil =new ImageIcon(getClass().getResource(
 						"img/bb8.png"));
@@ -112,19 +124,23 @@ public class Perfil extends JPanel {
 				Actualizar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 
-						Connection c=AccesoBD.getConexion();
-					if(c==null){
+						Connection c = AccesoBD.getConexion();
+					
 						jugador.setNombre(nombre.getText());
 						jugador.setPrimerApellido(primerApellido.getText());
 						jugador.setSegundoApellido(SegundoApellido.getText());
 						jugador.setEdad(Integer.valueOf(Edad.getText()));
+						udb = new usuariosDB(jugador);
 		
-					udb.ActualizarPuntiacion(AccesoBD.getConexion());
-						txtMensaje.setText("ACTUALIZADO");
-					}else{
+					udb.actualizarUser(AccesoBD.getConexion());
+					
+					System.out.println(udb.getResultado().toString());
+			
+				txtMensaje.setText(udb.getResultado().toString());
+					
+					
 						
-						txtMensaje.setText("ERROR AL CONECTAR CON LA BD");
-					}
+					
 					}
 				});
 				
@@ -145,7 +161,6 @@ public class Perfil extends JPanel {
 				
 				txtMensaje = new JTextField();
 				txtMensaje.setHorizontalAlignment(SwingConstants.LEFT);
-				txtMensaje.setText("mensaje");
 				txtMensaje.setFont(new Font("Tahoma", Font.PLAIN, 18));
 				txtMensaje.setEditable(false);
 				txtMensaje.setColumns(10);

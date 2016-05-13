@@ -14,10 +14,10 @@ public class Jugador {
 	private String nombre ;
 	private String PrimerApellido  ;
 	private String segundoApellido  ;
-	usuariosDB jDB;
+	usuariosDB udb;
 	private int puntos ;
 	private int edad ;
-
+	private String resultado;
 	
 	public Jugador(){
 		
@@ -28,6 +28,17 @@ public class Jugador {
 	
 	
 	
+	public Jugador(String id, int puntos) {
+		super();
+		this.id = id;
+		this.puntos = puntos;
+	}
+
+
+
+
+
+
 	public Jugador(String id, String nombre, String primerApellido, String segundoApellido, int puntos, int edad) {
 		super();
 		this.id = id;
@@ -107,29 +118,8 @@ public class Jugador {
 		this.segundoApellido = segundoApellido;
 	}
 
-	public void insertarUsuario(Connection c){
-		jDB = new usuariosDB(this);
-		jDB.insertarUsuario(c);
-	}
-	
-	public void loguearUsuario(JComboBox j,Connection c){
-		jDB = new usuariosDB(this);
-		jDB.JcomboxUser(j, c);
-	}
 	
 	
-	public void Actualizarpuntos(Connection c){
-		jDB = new usuariosDB(this);
-		jDB.ActualizarPuntiacion(c);
-	}
-	
-
-	public void ActualizarUser(Connection c){
-		jDB = new usuariosDB(this);
-		jDB.actualizarUser(c);
-	}
-	
-
 	@Override
 	public String toString() {
 		
@@ -137,6 +127,22 @@ public class Jugador {
 				
 				
 		return Resultado; 
+	}
+
+
+
+
+
+
+	public String getResultado() {
+		return resultado;
+	}
+
+
+
+
+	public void setResultado(String resultado) {
+		this.resultado = resultado;
 	}
 
 

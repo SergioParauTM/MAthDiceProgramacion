@@ -8,6 +8,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
+import java.sql.Connection;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -17,6 +18,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import BBDD.AccesoBD;
+import BBDD.usuariosDB;
 import Juego.Jugador;
 
 import java.awt.FlowLayout;
@@ -26,6 +29,8 @@ public class principal extends JFrame  {
 	Perfil perfil = new Perfil();
 	Login login = new Login();
 	Jugador jugador = new Jugador();
+	 private AccesoBD abd;
+	private usuariosDB udb;
 	
 	
 
@@ -35,6 +40,7 @@ public class principal extends JFrame  {
 	
 	final static String JUEGO = "Juego";
 	final static String PERFIL = "Perfil";
+	String iduser;
 	/**
 	 * Launch the application.
 	 */
@@ -45,7 +51,8 @@ public class principal extends JFrame  {
 	 */
 	public void setJugador(Jugador jugador){
 		this.jugador=jugador;
-
+		
+		iduser=jugador.getId();
 			juego.setJugador(jugador);
 		perfil.setJugador(jugador);
 	}
@@ -98,6 +105,17 @@ public class principal extends JFrame  {
 	            public void actionPerformed(ActionEvent ae) {
 	            	 CardLayout cl = (CardLayout)(contentPane.getLayout());
 	 			    cl.show(contentPane, JUEGO);
+	 			    
+	 			   Connection c = AccesoBD.getConexion();
+
+	 				udb = new usuariosDB(jugador);
+	 				jugador = udb.usuarioPorID(AccesoBD.getConexion(), iduser);
+	 				
+	 				juego.setJugador(jugador);
+	 				
+	 				
+	 				
+	 			    
 	            }
 	        });
 	        
@@ -107,6 +125,12 @@ public class principal extends JFrame  {
 	            public void actionPerformed(ActionEvent ae) {
 	           	 CardLayout cl = (CardLayout)(contentPane.getLayout());
 	 			    cl.show(contentPane, PERFIL);
+	 			   Connection c = AccesoBD.getConexion();
+
+	 				udb = new usuariosDB(jugador);
+	 				jugador = udb.usuarioPorID(AccesoBD.getConexion(), iduser);
+	 				
+	 				perfil.setJugador(jugador);
 	            }
 	        });
 	         

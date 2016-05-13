@@ -58,7 +58,9 @@ int[] valor = new int [6];
 	private usuariosDB udb;
 
 	private String iduser;
-	private int puntosactuales;
+	
+	private JLabel puntosActuales;
+
 	
 	
 	
@@ -70,12 +72,15 @@ int[] valor = new int [6];
 		lbBienvenidoalJuego.setText("Bienvenido al juego  "
 				+ jugador.getNombre().toString());
 		
-		puntuacion.setText("Tu puntuación actual es de : " + jugador.getPuntos());
+	
 		
-		
-		puntosactuales  = jugador.getPuntos();
+		puntosActuales.setText(String.valueOf(jugador.getPuntos()));
+	
 		
 		iduser = jugador.getId();
+		
+
+		
 
 	
 	}
@@ -494,18 +499,21 @@ int[] valor = new int [6];
 						textoresultado.setText("INTENTALO DE NUEVO");
 					} else {
 						textoresultado.setText("CORRECTO");
+					
+						
+						int puntosD =5 + Integer.parseInt(puntosActuales.getText());
+				
+		
+						Connection c = AccesoBD.getConexion();
+				
+						udb = new usuariosDB(jugador);
+						udb.ActualizarPuntuacion(AccesoBD.getConexion(), puntosD);
+						
+						puntosActuales.setText(String.valueOf(puntosD));
+					
+							
 						
 						
-						 Connection c=AccesoBD.getConexion();
-							if(c==null){
-								Jugador j = new Jugador();
-								j.Actualizarpuntos(c);
-							}else{
-								
-							}
-
-						int puntosD = operacion + puntosactuales;
-						puntuacion.setText("Tu puntuación actual es de : " +String.valueOf(puntosD));
 					}
 				} else if (resultado.getText().length() == 20 ) {
 
@@ -527,20 +535,21 @@ int[] valor = new int [6];
 					} else {
 						
 						textoresultado.setText("CORRECTO");
-	
-						 Connection c=AccesoBD.getConexion();
-							if(c==null){
-								Jugador j = new Jugador();
-								j.Actualizarpuntos(c);
-							}else{
-								
-							}
-
-						int puntosD = total + puntosactuales;
+						
 					
-						puntuacion.setText("Tu puntuación actual es de : " +String.valueOf(puntosD));
+
+						int puntosD = 5 + Integer.parseInt(puntosActuales.getText());
+					
 						
+							Connection c = AccesoBD.getConexion();
+					
+					
+							udb = new usuariosDB(jugador);
+							udb.ActualizarPuntuacion(AccesoBD.getConexion(), puntosD);
+							
+					
 						
+							puntosActuales.setText(String.valueOf(puntosD));
 						
 					}
 					
@@ -573,9 +582,13 @@ int[] valor = new int [6];
 		Reiniciar.setBounds(855, 564, 247, 66);
 		add(Reiniciar);
 		
-		puntuacion = new JLabel("New label");
-		puntuacion.setBounds(802, 34, 374, 14);
+		puntuacion = new JLabel("Tu puntuación actual es de: ");
+		puntuacion.setBounds(766, 43, 150, 14);
 		add(puntuacion);
+		
+		puntosActuales = new JLabel("");
+		puntosActuales.setBounds(926, 43, 150, 14);
+		add(puntosActuales);
 		
 
 
@@ -630,8 +643,6 @@ int[] valor = new int [6];
 		dado6.setIcon(img[5]);
 		
 	}
-	
-
 	
 	
 
