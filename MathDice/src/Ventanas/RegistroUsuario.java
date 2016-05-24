@@ -62,7 +62,7 @@ public class RegistroUsuario extends JFrame {
 		  registroU = RegistroUsuario.this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 524, 414);
-		
+		setTitle("REGISTRO");
 		//Campos de registro
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

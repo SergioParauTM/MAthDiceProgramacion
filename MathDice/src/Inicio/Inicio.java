@@ -73,13 +73,10 @@ public class Inicio extends JFrame {
 				
 				 j=(Jugador)comboBox.getSelectedItem();
 				
-				j = new Jugador(j.getId(),j.getNombre(),j.getPrimerApellido(),j.getSegundoApellido(),j.getPuntos(),j.getEdad());
+				//j = new Jugador(j.getId(),j.getNombre(),j.getPrimerApellido(),j.getSegundoApellido(),j.getPuntos(),j.getEdad());
 				
 				lanzarJuego();
-				
-		
-				
-				
+
 			}
 		});
 		
@@ -162,6 +159,8 @@ public class Inicio extends JFrame {
 
 			
 	}
+	
+	
 	
 	
 }

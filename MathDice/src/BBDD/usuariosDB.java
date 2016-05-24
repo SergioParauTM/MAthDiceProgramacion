@@ -37,7 +37,6 @@ public class usuariosDB {
 	public void insertarUsuario(Connection c){
 		
 		
-		
 		try{
 			ResultSet rs;
 			orden = c.createStatement();

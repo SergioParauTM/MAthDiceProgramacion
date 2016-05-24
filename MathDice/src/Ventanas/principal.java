@@ -68,12 +68,9 @@ public class principal extends JFrame  {
 		setContentPane(contentPane);
 		contentPane.setLayout(new CardLayout(0, 0));
 		setMinimumSize(new Dimension(1400,800));
-		
-		juego.generarimagenes();
+		setTitle("juego");
+		juego.generarImagenes();
         menuBar();
-
-       
- 
 	        contentPane.add(juego, JUEGO );
 	    	contentPane.add(perfil, PERFIL);
 	    	
@@ -112,6 +109,7 @@ public class principal extends JFrame  {
 	 				jugador = udb.usuarioPorID(AccesoBD.getConexion(), iduser);
 	 				
 	 				juego.setJugador(jugador);
+	 				setTitle("juego");
 	 				
 	 				
 	 				
@@ -129,8 +127,8 @@ public class principal extends JFrame  {
 
 	 				udb = new usuariosDB(jugador);
 	 				jugador = udb.usuarioPorID(AccesoBD.getConexion(), iduser);
-	 				
 	 				perfil.setJugador(jugador);
+	 				setTitle("perfil");
 	            }
 	        });
 	         

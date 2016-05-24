@@ -1,5 +1,6 @@
 package Ventanas;
 
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.util.Random;
@@ -11,641 +12,389 @@ import javax.swing.border.EmptyBorder;
 
 import BBDD.AccesoBD;
 import BBDD.usuariosDB;
-
-import javax.swing.JTextField;
-
 import Juego.Jugador;
 
+
 import javax.swing.JLabel;
-
-import java.awt.Color;
-
+import javax.swing.SwingConstants;
 import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.Font;
+import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.awt.Font;
-import javax.swing.SwingConstants;
+import java.awt.event.MouseListener;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+import javax.swing.JMenuBar;
 
-public class Juego extends JPanel{
+public class Juego extends JPanel {
 	
-	//Declaramos las variables
-
-
-
-	private Random random = new Random();
-
 	
-ImageIcon[] img = new ImageIcon[6];
-int[] valor = new int [6];
-
-
-
-	String resta = "-";
-	String suma = "+";
-	private JButton Reiniciar;
+	private JLabel ResultadoObtenido, puntuacionTotal;
+	private JLabel resultadoOperaciones;
+	//Boton repetir
+	private JButton reiniciar;
 	
-	private Jugador jugador;
-	private JLabel dado1, dado2,dado3,dado4,dado5,dado6;
-
-	private JLabel lbBienvenidoalJuego;
-	private JTextField mostrar;
-	private JLabel puntuacion;
-
+	//Manejador de la base de datos
+	private AccesoBD adb;
 	private usuariosDB udb;
-
 	private String iduser;
+
+	private JPanel contentPane;
 	
-	private JLabel puntosActuales;
+	//Array de dados
+	private ImageIcon[] dados3=new ImageIcon[3];
+	private ImageIcon[] dados6=new ImageIcon[6];
+	private ImageIcon[] dados12=new ImageIcon[12];
 
 	
-	
-	
-	//creamos el metodo que nos devolverá el nombre que hay en la clase jugador
+	private Random random=new Random();
 
+	private int NDados12;
+	private int[] NDados3=new int[3];
+	private int[] NDados6=new int[2];
+	
+	
+
+	private Jugador jugador;
+	JLabel nombreJugador;
+	JLabel puntuacion;
+	private JLabel dado1,dado2,dado3;
+	private JLabel dado4,dado5;
+	private JLabel dado6;
+	private JButton suma,resta;
+	private JButton Mdice;
+	private JTextField EditText;
+
+
+	private boolean Cdado=true;
+	private boolean ifSuma=true;
+	private int operacion=0;
+	private int numerosIntroducidos=0;
+
+	
+	//JLable de muestra de resultados
+	
+	/**
+	 * Create the frame.
+	 */
+	
 	public void setJugador(Jugador jugador) {
 		this.jugador=jugador;
 
-		lbBienvenidoalJuego.setText("Bienvenido al juego  "
+		nombreJugador.setText("Bienvenido al juego:  "
 				+ jugador.getNombre().toString());
 		
-	
-		
-		puntosActuales.setText(String.valueOf(jugador.getPuntos()));
+		puntuacionTotal.setText(String.valueOf(jugador.getPuntos()));
 	
 		
 		iduser = jugador.getId();
 		
 
-		
 
 	
 	}
-	
-	
-
 	public Juego() {
-		
 
-	
+
 		setBackground(new Color(135, 206, 250));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setLayout(null);
-
-		mostrar = new JTextField();
-		mostrar.setEnabled(false);
-		mostrar.setEditable(false);
-		mostrar.setFont(new Font("Century", Font.BOLD, 25));
-		mostrar.setBounds(785, 189, 371, 78);
-		add(mostrar);
-		mostrar.setColumns(10);
-
-		lbBienvenidoalJuego = new JLabel(); //nos devolvera el valor del metodo setJugador
-		lbBienvenidoalJuego.setFont(new Font("Verdana", Font.BOLD, 16));
-		lbBienvenidoalJuego.setBounds(802, 11, 354, 21);
-		add(lbBienvenidoalJuego);
-
-		JLabel textoresultado = new JLabel();
-		textoresultado.setFont(new Font("Comic Sans MS", Font.BOLD, 23));
-		textoresultado.setHorizontalAlignment(SwingConstants.CENTER);
-		textoresultado.setBounds(766, 437, 413, 99);
-		add(textoresultado);
-
+		contentPane = this;
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(null);
+		setLayout(null);
+		
 		dado1 = new JLabel();
-		dado1.setBackground(Color.LIGHT_GRAY);
-		dado1.setBounds(10, 31, 150, 150);
-		add(dado1);
+		dado1.setBounds(10, 10, 150, 150);
+		contentPane.add(dado1);
 		
-		dado1.addMouseListener(new MouseAdapter() { //esta funcion hace referencia a cuando hagamos click en la imagen
+		dado2 = new JLabel();
+		dado2.setBounds(160, 10, 150, 150);
+		contentPane.add(dado2);
 
-			public void mouseClicked(MouseEvent e) {
-
-				if (dado1.isEnabled() == true
-						&& mostrar.getText().endsWith("+")
-						|| mostrar.getText().endsWith("-")
-						|| mostrar.getText().length() == 0) { //mientras se cumpla esta condicion nos devolverá lo que hay dentro
-					
-					mostrar.setText(mostrar.getText() + valor[0]); //devolverá  lo que hay dentro + el valor de la imagen que generamos con el random
-					dado1.setEnabled(false); //lo que hará es volver inhabilitado el jlabel 
-
-				}
-
-			}
-		});
-
-	 dado2 = new JLabel();
-		dado2.setBackground(Color.LIGHT_GRAY);
-		dado2.setBounds(170, 34, 150, 150);
-		add(dado2);
+		dado3 = new JLabel();
+		dado3.setBounds(310, 10, 150, 150);
+		contentPane.add(dado3);
 		
-		dado2.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (dado2.isEnabled() == true
-						&& mostrar.getText().endsWith("+")
-						|| mostrar.getText().endsWith("-")
-						|| mostrar.getText().length() == 0) {
-					mostrar.setText(mostrar.getText() + valor[1]);
-
-					dado2.setEnabled(false);
-				}
-
-			}
-		});
-
-		 dado3 = new JLabel();
-		dado3.setBackground(Color.LIGHT_GRAY);
-		dado3.setBounds(334, 34, 150, 150);
-		add(dado3);
+		dado4 = new JLabel();
+		dado4.setBounds(10, 160, 150, 150);
+		contentPane.add(dado4);
 		
+		dado5 = new JLabel();
+		dado5.setBounds(160, 160, 150, 150);
+		contentPane.add(dado5);		
 
-		dado3.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-
-				if (dado3.isEnabled() == true
-						&& mostrar.getText().endsWith("+")
-						|| mostrar.getText().endsWith("-")
-						|| mostrar.getText().length() == 0) {
-					mostrar.setText(mostrar.getText() + valor[2]);
-					dado3.setEnabled(false);
-
-				}
-
-			}
-		});
+		dado6 = new JLabel("");
+		dado6.setBounds(10, 310, 173, 173);
+		contentPane.add(dado6);	
 		
-
-		 dado4 = new JLabel();
-		dado4.setBackground(Color.LIGHT_GRAY);
-		dado4.setBounds(180, 195, 150, 150);
-		add(dado4);
-		
-
-		dado4.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (dado4.isEnabled() == true
-						&& mostrar.getText().endsWith("+")
-						|| mostrar.getText().endsWith("-")
-						|| mostrar.getText().length() == 0) {
-					mostrar.setText(mostrar.getText() + valor[3]);
-					dado4.setEnabled(false);
-
-				}
-
-			}
-		});
-
-		 dado5 = new JLabel();
-		dado5.setBackground(Color.LIGHT_GRAY);
-		dado5.setBounds(10, 192, 150, 150);
-		add(dado5);
-		
-
-		dado5.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (dado5.isEnabled() == true
-						&& mostrar.getText().endsWith("+")
-						|| mostrar.getText().endsWith("-")
-						|| mostrar.getText().length() == 0) {
-					mostrar.setText(mostrar.getText() + valor[4]);
-					dado5.setEnabled(false);
-
-				}
-
-			}
-		});
-
-		 dado6 = new JLabel();
-		dado6.setBackground(Color.LIGHT_GRAY);
-		dado6.setBounds(80, 423, 150, 150);
-		add(dado6);
-	
-		
-		
-		//FIN JLABEL IMAGENES
-
-		
-		//INICIO BOTONES OPERADORES
-		
-		JButton btnNewButton = new JButton("+"); //BOTON SUMA
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				//MENTRAS SE CUMPLAN ESTAS CONDICIONES NO HARÁ NADA EL OPERADOR
-				if (mostrar.getText().endsWith("-")
-						&& mostrar.getText().endsWith("+")) {
-
-				} else if (mostrar.getText().endsWith("+")) {
-
-				} else if (mostrar.getText().length() == 0) {
-
-				} else {
-					mostrar.setText(mostrar.getText() + suma); // DEVUELVE EL SIGNO "+"
-				}
-
-			}
-		});
-		btnNewButton.setBounds(785, 59, 115, 99);
-		add(btnNewButton);
-
-		
-		//fin operador suma
-		
-		JButton btnNewButton_1 = new JButton("-"); //BOTON RESTA
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//MENTRAS SE CUMPLAN ESTAS CONDICIONES NO HARÁ NADA EL OPERADOR
-				if (mostrar.getText().endsWith("+")) {
-
-				} else if (mostrar.getText().endsWith("-")) {
-
-				} else if (mostrar.getText().length() == 0) {
-
-				} else {
-					mostrar.setText(mostrar.getText() + resta); // DEVUELVE EL SIGNO "-"
-				}
-			}
-		});
-		
-		//FIN BOTONES OPERADORES
-
-		JLabel resultado = new JLabel(""); // NOS DEVOLVERA EL RESULTADO DE LA OPERACION
-		resultado.setHorizontalAlignment(SwingConstants.CENTER);
-		resultado.setFont(new Font("Perpetua Titling MT", Font.BOLD, 19));
-		resultado.setBounds(802, 373, 290, 53);
-		add(resultado);
-
-		btnNewButton_1.setBounds(1035, 59, 121, 99);
-		add(btnNewButton_1);
-
-		
-		//BOTON QUE REALIZARÁ LAS OPERACIONES 
-		JButton btnNewButton_2 = new JButton("MATHDICE");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (mostrar.getText().length() == 3) { // MIENTRAS EL NUMERO DE CARACTERES SEA 3 Y DEPENDIENDO DE LOS SIGNOS REALIZARÁ OPERACIONES
-					int u = Integer.parseInt(String.valueOf(mostrar.getText()
-							.charAt(0))); //RECUPERAR LA POSICION DEL JTEXTFIELD
-					String d = String.valueOf(mostrar.getText().charAt(1));
-					int t = Integer.parseInt(String.valueOf(mostrar.getText()
-							.charAt(2)));
-					if (d.equals("-")) {
-						int resta = u - t;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(resta));
-					} else {
-						int suma = u + t;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					}
-				}
-				
-				// FIN CUANDO ES IGUAL A 3 
-				
-				
-				if (mostrar.getText().length() == 5) {// MIENTRAS EL NUMERO DE CARACTERES SEA 5 Y DEPENDIENDO DE LOS SIGNOS REALIZARÁ OPERACIONES
-					int u = Integer.parseInt(String.valueOf(mostrar.getText()
-							.charAt(0)));
-					String d = String.valueOf(mostrar.getText().charAt(1));
-					int t = Integer.parseInt(String.valueOf(mostrar.getText()
-							.charAt(2)));
-					String c = String.valueOf(mostrar.getText().charAt(3));
-					int ci = Integer.parseInt(String.valueOf(mostrar.getText()
-							.charAt(4)));
-					if (d.equals("-") && c.equals("-")) {
-						int resta = u - t - ci;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(resta));
-					} else if (d.equals("+") && c.equals("+")) {
-						int suma = u + t + ci;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("+") && c.equals("-")) {
-						int suma = u + t - ci;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("-") && c.equals("+")) {
-						int suma = u - t + ci;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					}
-				}
-				//FIN CUANDO ES IGUAL A 5
-
-				if (mostrar.getText().length() == 7) { // MIENTRAS EL NUMERO DE CARACTERES SEA 7 Y DEPENDIENDO DE LOS SIGNOS REALIZARÁ OPERACIONES
-					int u = Integer.parseInt(String.valueOf(mostrar.getText()
-							.charAt(0)));
-					String d = String.valueOf(mostrar.getText().charAt(1));
-					int t = Integer.parseInt(String.valueOf(mostrar.getText()
-							.charAt(2)));
-					String c = String.valueOf(mostrar.getText().charAt(3));
-					int ci = Integer.parseInt(String.valueOf(mostrar.getText()
-							.charAt(4)));
-					String se = String.valueOf(mostrar.getText().charAt(5));
-					int si = Integer.parseInt(String.valueOf(mostrar.getText()
-							.charAt(6)));
-					if (d.equals("-") && c.equals("-") && se.equals("-")) {
-						int resta = u - t - ci - si;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(resta));
-					} else if (d.equals("+") && c.equals("+") && se.equals("+")) {
-						int suma = u + t + ci + si;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("+") && c.equals("-")
-							&& se.equalsIgnoreCase("-")) {
-						int suma = u + t - ci - si;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("+") && c.equals("-") && se.equals("+")) {
-						int suma = u + t - ci + si;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-
-					} else if (d.equals("+") && c.equals("+") && se.equals("-")) {
-						int suma = u + t + ci - si;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("-") && c.equals("+") && se.equals("+")) {
-						int suma = u - t - ci + si;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("-") && c.equals("+") && se.equals("-")) {
-						int suma = u - t + ci - si;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					}
-				}
-				
-				
-				//FIN CUANDO ES IGUAL A 7 
-
-				if (mostrar.getText().length() == 9) { // MIENTRAS EL NUMERO DE CARACTERES SEA 9 Y DEPENDIENDO DE LOS SIGNOS REALIZARÁ OPERACIONES
-					int u = Integer.parseInt(String.valueOf(mostrar.getText()
-							.charAt(0)));
-					String d = String.valueOf(mostrar.getText().charAt(1));
-					int t = Integer.parseInt(String.valueOf(mostrar.getText()
-							.charAt(2)));
-					String c = String.valueOf(mostrar.getText().charAt(3));
-					int ci = Integer.parseInt(String.valueOf(mostrar.getText()
-							.charAt(4)));
-					String se = String.valueOf(mostrar.getText().charAt(5));
-					int si = Integer.parseInt(String.valueOf(mostrar.getText()
-							.charAt(6)));
-					String oc = String.valueOf(mostrar.getText().charAt(7));
-					int nu = Integer.parseInt(String.valueOf(mostrar.getText()
-							.charAt(8)));
-
-					if (d.equals("-") && c.equals("-") && se.equals("-")
-							&& oc.equals("-")) {
-						int resta = u - t - ci - si - nu;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(resta));
-					} else if (d.equals("+") && c.equals("+") && se.equals("+")
-							&& oc.equals("+")) {
-						int suma = u + t + ci + si + nu;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-
-					} else if (d.equals("+") && c.equals("+")
-							&& se.equalsIgnoreCase("+") && oc.equals("-")) {
-						int suma = u + t + ci + si - nu;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("+") && c.equals("+") && se.equals("-")
-							&& oc.equals("+")) {
-						int suma = u + t + ci - si + nu;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("+") && c.equals("+") && se.equals("-")
-							&& oc.equals("-")) {
-						int suma = u + t + ci - si - nu;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("+") && c.equals("-") && se.equals("+")
-							&& oc.equals("-")) {
-						int suma = u + t - ci + si - nu;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("+") && c.equals("-") && se.equals("-")
-							&& oc.equals("+")) {
-						int suma = u + t - ci - si + nu;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("+") && c.equals("-") && se.equals("-")
-							&& oc.equals("-")) {
-						int suma = u + t - ci - si - nu;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("+") && c.equals("-") && se.equals("+")
-							&& oc.equals("+")) {
-						int suma = u + t - ci + si + nu;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("-") && c.equals("-") && se.equals("-")
-							&& oc.equals("+")) {
-						int suma = u - t - ci - si + nu;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("-") && c.equals("-") && se.equals("+")
-							&& oc.equals("-")) {
-						int suma = u - t - ci + si - nu;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("-") && c.equals("+") && se.equals("-")
-							&& oc.equals("-")) {
-						int suma = u - t + ci - si - nu;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("-") && c.equals("+") && se.equals("-")
-							&& oc.equals("+")) {
-						int suma = u - t + ci - si + nu;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("-") && c.equals("+") && se.equals("+")
-							&& oc.equals("-")) {
-						int suma = u - t + ci + si - nu;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("-") && c.equals("-") && se.equals("+")
-							&& oc.equals("+")) {
-						int suma = u - t - ci + si + nu;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					} else if (d.equals("+") && c.equals("-") && se.equals("-")
-							&& oc.equals("-")) {
-						int suma = u + t - ci - si - nu;
-						resultado.setText("El resultado es : "
-								+ Integer.toString(suma));
-					}
-				}
-				
-				// FIN CUANDO ES IGUAL A 9
-				
-				// COMPARAR EL VALOR DEL RESULTADO CON EL VALOR DEL DADO6
-
-				if (resultado.getText().length() == 19) { // MIENTRAS EL NUMERO DE CARACTERES SEA 19 NOS VEVOLVERÁ EL ULTIMO VALOR
-
-					String texto = resultado.getText().toString();
-					int operacion = Integer.parseInt(String.valueOf(texto
-							.charAt(18))); //DEVOLVERÁ EL ULTIMO CARACTER
-					
-					System.out.println( operacion);
-					if ( operacion <=0|| operacion != valor[5] ) {
-						
-						textoresultado.setText("INTENTALO DE NUEVO");
-					} else {
-						textoresultado.setText("CORRECTO");
-					
-						
-						int puntosD =5 + Integer.parseInt(puntosActuales.getText());
-				
-		
-						Connection c = AccesoBD.getConexion();
-				
-						udb = new usuariosDB(jugador);
-						udb.ActualizarPuntuacion(AccesoBD.getConexion(), puntosD);
-						
-						puntosActuales.setText(String.valueOf(puntosD));
-					
-							
-						
-						
-					}
-				} else if (resultado.getText().length() == 20 ) {
-
-					String texto = resultado.getText().toString();
-					
-					String operacion = (String.valueOf(texto
-							.charAt(18)));
-					String operacion2 = (String.valueOf(texto
-							.charAt(19)));
-					
-
-					String dosValores = (operacion + operacion2);
-					int total = Integer.parseInt(dosValores);
-					
-					
-					if (valor[5] != total || total <=0) {
-						textoresultado.setText("INTENTALO DE NUEVO");
-			
-					} else {
-						
-						textoresultado.setText("CORRECTO");
-						
-					
-
-						int puntosD = 5 + Integer.parseInt(puntosActuales.getText());
-					
-						
-							Connection c = AccesoBD.getConexion();
-					
-					
-							udb = new usuariosDB(jugador);
-							udb.ActualizarPuntuacion(AccesoBD.getConexion(), puntosD);
-							
-					
-						
-							puntosActuales.setText(String.valueOf(puntosD));
-						
-					}
-					
-					
-				}
-					
-				if(resultado.getText().length()!=0){
-				Reiniciar.setEnabled(true);
-				}
-			}
-		});
-		btnNewButton_2.setBounds(785, 292, 371, 53);
-		add(btnNewButton_2);
-
-		 Reiniciar = new JButton("REINICIAR");
-		 Reiniciar.setEnabled(false);
-		Reiniciar.addActionListener(new ActionListener() {
+		//Colocamos los botones de suma y resta
+		suma = new JButton("+");
+		suma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				generarimagenes();
-				mostrar.setText(null);
-				resultado.setText(null);
-				textoresultado.setText(null);
-			
-			Reiniciar.setEnabled(false);
-				
-				
-
+				if(!Cdado){
+					EditText.setText(EditText.getText()+"+");
+					Cdado=true;
+					ifSuma=true;
+					Mdice.setEnabled(false);
+				}
 			}
 		});
-		Reiniciar.setBounds(855, 564, 247, 66);
-		add(Reiniciar);
+		suma.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		suma.setBounds(641, 97, 195, 63);
+		contentPane.add(suma);		
 		
-		puntuacion = new JLabel("Tu puntuación actual es de: ");
-		puntuacion.setBounds(766, 43, 150, 14);
+		resta = new JButton("-");
+		resta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(!Cdado){
+					EditText.setText(EditText.getText()+"-");
+					Cdado=true;
+					ifSuma=false;
+					Mdice.setEnabled(false);
+				}
+			}
+		});
+		
+		//Texto del jugador
+		nombreJugador = new JLabel("Bienvenido al juego: ");
+		nombreJugador.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		nombreJugador.setHorizontalAlignment(SwingConstants.LEFT);
+		nombreJugador.setBounds(641, 10, 464, 44);
+		contentPane.add(nombreJugador);
+		resta.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		resta.setBounds(910, 97, 195, 63);
+		contentPane.add(resta);
+		
+		//Caja de resultados
+		EditText = new JTextField();
+		EditText.setEditable(false);
+		EditText.setBounds(641, 173, 464, 63);
+		EditText.setFont(new Font("Tahoma", Font.PLAIN, 36));
+		contentPane.add(EditText);
+		EditText.setColumns(10);
+		
+		//Colocamos el boton de resultado
+		Mdice = new JButton("MATH DICE");
+		Mdice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(numerosIntroducidos>1){
+					ResultadoObtenido.setText("Tu resultado es "+String.valueOf(operacion));
+				
+					if((NDados12+1)==operacion){
+						resultadoOperaciones.setText("CORRECTO");
+						jugador.setPuntos(jugador.getPuntos()+5);
+						puntuacionTotal.setText(String.valueOf(Integer.parseInt(puntuacionTotal.getText()) + 5));
+						
+						udb = new usuariosDB(jugador);
+						udb.ActualizarPuntuacion(AccesoBD.getConexion(), jugador.getPuntos());
+					
+					
+					}else{
+						resultadoOperaciones.setText(" TOCA INTÉNTARLO DE NUEVO");
+					}
+					
+					reiniciar.setEnabled(true);
+				}
+			}
+		});
+		Mdice.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		Mdice.setBounds(641, 247, 464, 63);
+		contentPane.add(Mdice);
+		Mdice.setEnabled(false);
+		
+		//Cajas de resultados
+		ResultadoObtenido = new JLabel("");
+		ResultadoObtenido.setHorizontalAlignment(SwingConstants.CENTER);
+		ResultadoObtenido.setFont(new Font("Tahoma", Font.PLAIN, 36));
+		ResultadoObtenido.setBounds(641, 341, 464, 41);
+		contentPane.add(ResultadoObtenido);
+		
+		//Caja de OK
+		resultadoOperaciones = new JLabel("");
+		resultadoOperaciones.setHorizontalAlignment(SwingConstants.CENTER);
+		resultadoOperaciones.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		resultadoOperaciones.setBounds(641, 398, 464, 41);
+		contentPane.add(resultadoOperaciones);
+		
+		//BOTON REPETIR
+		reiniciar = new JButton("Reinciar");
+		reiniciar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				
+				generarImagenes();
+				AñadirLabelListener();
+				reiniciar.setEnabled(false);
+				
+				
+			}
+		});
+		reiniciar.setEnabled(false);
+		reiniciar.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		reiniciar.setBounds(641, 494, 464, 63);
+		contentPane.add(reiniciar);
+		
+		puntuacion = new JLabel("Tu puntuacion es  :");
+		puntuacion.setHorizontalAlignment(SwingConstants.LEFT);
+		puntuacion.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		puntuacion.setBounds(641, 65, 235, 21);
 		add(puntuacion);
 		
-		puntosActuales = new JLabel("");
-		puntosActuales.setBounds(926, 43, 150, 14);
-		add(puntosActuales);
+		 puntuacionTotal = new JLabel("1000000");
+		puntuacionTotal.setHorizontalAlignment(SwingConstants.LEFT);
+		puntuacionTotal.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		puntuacionTotal.setBounds(886, 65, 235, 21);
+		add(puntuacionTotal);
 		
-
-
+		
+		//INICIALIZAR METODOS
+		generarImagenes();
+		AñadirLabelListener();
 	}
 	
-	public void generarimagenes(){
+	public void AñadirLabelListener(){
 		
-		//DADO1
-		img[0]=new ImageIcon(getClass().getResource(
-				"img/dado" + String.valueOf(valor[0] = random.nextInt(3) + 1)
-				+ "_3.png"));
+		dado1.addMouseListener(new ActionListenerDados());
+		dado2.addMouseListener(new ActionListenerDados());
+		dado3.addMouseListener(new ActionListenerDados());
+		dado4.addMouseListener(new ActionListenerDados());
+		dado5.addMouseListener(new ActionListenerDados());
+		
+		
+	}
+	
+	public void generarImagenes(){
 		
 		dado1.setEnabled(true);
-		dado1.setIcon(img[0]);
-		
-		
-		//dado2
-		
-		img[1]=new ImageIcon(getClass().getResource(
-				"img/dado" + String.valueOf(valor[1] = random.nextInt(3) + 1)
-				+ "_3.png"));
 		dado2.setEnabled(true);
-		dado2.setIcon(img[1]);
-		
-		//DADO3
-		img[2]=new ImageIcon(getClass().getResource(
-				"img/dado" + String.valueOf(valor[2]= random.nextInt(3) + 1)
-				+ "_3.png"));
 		dado3.setEnabled(true);
-		dado3.setIcon(img[2]);
-		
-		//DADO4
-		img[3]=new ImageIcon(getClass().getResource(
-				"img/dado" + String.valueOf(valor[3] = random.nextInt(6) + 1)
-				+ "_6.png"));
 		dado4.setEnabled(true);
-		dado4.setIcon(img[3]);
-		
-		
-		//DADO5
-		img[4]=new ImageIcon(getClass().getResource(
-				"img/dado" + String.valueOf(valor[4]= random.nextInt(6) + 1)
-				+ "_6.png"));
 		dado5.setEnabled(true);
-		dado5.setIcon(img[4]);
 		
-		//DADO6
-		img[5]=new ImageIcon(getClass().getResource(
-				"img/dode" + String.valueOf(valor[5] = random.nextInt(12) + 1)
-				+ ".png"));
+		for(int i=0;i<dados3.length;i++){
+			dados3[i]=new ImageIcon(getClass().getResource("img/dado"+String.valueOf(i+1)+"_3.png"));
+		}
+		for(int i=0;i<dados6.length;i++){
+			dados6[i]=new ImageIcon(getClass().getResource("img/dado"+String.valueOf(i+1)+"_6.png"));
+		}
+		for(int i=0;i<dados12.length;i++){
+			dados12[i]=new ImageIcon(getClass().getResource("img/dode"+String.valueOf(i+1)+".png"));
+		}
+
 		
-		dado6.setIcon(img[5]);
+		//Colocamos los dados de 3 caras
+		for(int i=0;i<NDados3.length;i++) NDados3[i]=random.nextInt(3); //El numero aleatorio
+		dado1.setIcon(dados3[NDados3[0]]); //Imagen dentro de los JLabel
+		dado1.setName("1");
+		dado2.setIcon(dados3[NDados3[1]]);
+		dado2.setName("2");
+		dado3.setIcon(dados3[NDados3[2]]);
+		dado3.setName("3");
+		
+		for(int i=0;i<NDados6.length;i++) NDados6[i]=random.nextInt(6);
+		dado4.setIcon(dados6[NDados6[0]]);
+		dado4.setName("4");
+		dado5.setIcon(dados6[NDados6[1]]);
+		dado5.setName("5");
+	
+	
+		
+		NDados12=random.nextInt(12);
+		dado6.setIcon(dados12[NDados12]);		
+	
+		
+		ResultadoObtenido.setText(null);
+		resultadoOperaciones.setText(null);
+		EditText.setText(null);
+		
+	
+		Cdado=true;
+		operacion=0;
+		numerosIntroducidos=0;
+		ifSuma=true;		
 		
 	}
 	
-	
+	private int Resultado(int num){
+		numerosIntroducidos++;
+		if(numerosIntroducidos>1){
+			if(ifSuma) operacion=operacion+num;
+			else operacion=operacion-num;
+		}else{
+			operacion=num;
+		}
+		return operacion;
+	}
 
+	private class ActionListenerDados implements MouseListener {
+		
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			JLabel dado = (JLabel) e.getSource();
+			int nombredado=Integer.parseInt(dado.getName().toString());
+			
+			if(Cdado==true){
+				if(nombredado<4){
+					
+					int resultado= (NDados3[nombredado-1])+1;
+					EditText.setText(EditText.getText()+String.valueOf(resultado));
+				
+				
+				}else{
+					System.out.println(String.valueOf(nombredado) + " ," + NDados6[nombredado-4]+1);
+					int resultado= (NDados6[nombredado-4])+1;
+					EditText.setText(EditText.getText()+String.valueOf(resultado));
+				}
+				
+				if(nombredado<4){
+					Resultado(NDados3[nombredado-1]+1);
+				}else{
+					Resultado(NDados6[nombredado-4]+1);
+				}
+				
+				
+				dado.setEnabled(false);
+				
+				
+				
+				Cdado=false;
 	
-	
+			}
+			
+
+			if(dado.isEnabled()==false){
+				dado.removeMouseListener(this);
+			}
+			
+			if(EditText.getText().length()<=2){
+					Mdice.setEnabled(false);
+				
+			}else{
+				Mdice.setEnabled(true);
+			}
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+
+		}
+
+	}
 }
